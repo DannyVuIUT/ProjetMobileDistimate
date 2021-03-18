@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/country_element_height">
+    android:layout_height="@dimen/country_element_height"
+    >
 
     <ImageView
         android:id="@+id/imageCountry"
@@ -49,7 +50,7 @@
         app:layout_constraintLeft_toLeftOf="@id/imageFlag"
         app:layout_constraintTop_toBottomOf="@id/countryArea"
         android:layout_marginVertical="2dp"
-        android:id="@+id/CountryCities"
+        android:id="@+id/countryCities"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="17sp" />

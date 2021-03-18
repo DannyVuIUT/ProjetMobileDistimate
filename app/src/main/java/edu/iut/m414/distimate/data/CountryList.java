@@ -16,29 +16,30 @@ public class CountryList {
     private static CountryList instance;
     private final List<Country> countries;
 
-    private CountryList(){
+    private CountryList() {
         countries = new ArrayList<>();
     }
 
-    public static CountryList getInstance(){
+    public static CountryList getInstance() {
         createInstance();
         return instance;
     }
 
-    public static Country get(int position){
+    public static Country get(int position) {
         createInstance();
         return instance.countries.get(position);
     }
 
-    public static int size(){
+    public static int size() {
         createInstance();
         return instance.countries.size();
     }
 
-    private static void createInstance(){
-        if(instance==null)
-            instance= new CountryList();
+    private static void createInstance() {
+        if (instance == null)
+            instance = new CountryList();
     }
+
     public static void constructCountries(Context context) {
         createInstance();
         if (size() == 0) {
@@ -54,32 +55,32 @@ public class CountryList {
         }
     }
 
-    private static String getJSONFromAssets(Context context){
+    private static String getJSONFromAssets(Context context) {
         String jsonContent;
-        try{
+        try {
             InputStream inputStream = context.getAssets().open("countries.json");
             int size = inputStream.available();
-            byte[] buffer = new byte[size] ;
+            byte[] buffer = new byte[size];
             inputStream.read(buffer);
             inputStream.close();
             jsonContent = new String(buffer, StandardCharsets.UTF_8);
-        }catch(IOException exception) {
+        } catch (IOException exception) {
             exception.printStackTrace();
             return null;
         }
         return jsonContent;
     }
 
-    private static Country getCountryFromJSONObject(JSONObject jsonObject, Context context) throws JSONException{
+    private static Country getCountryFromJSONObject(JSONObject jsonObject, Context context) throws JSONException {
         String id = jsonObject.getString("id");
-        String name = jsonObject.getString("name");
+        int nameId = context.getResources().getIdentifier(jsonObject.getString("name"),"string",context.getPackageName());
         int citiesCount = jsonObject.getInt("citiesCount");
         int area = jsonObject.getInt("area");
-        String flagName = "flag_"+id;
-        int flagFile = context.getResources().getIdentifier(flagName, "drawable",  context.getPackageName());
-        String imageName = "image_"+id;
-        int imageFile = context.getResources().getIdentifier(imageName, "drawable",  context.getPackageName());
+        String flagName = "flag_" + id.toLowerCase();
+        int flagFile = context.getResources().getIdentifier(flagName, "drawable", context.getPackageName());
+        String imageName = "image_" + id.toLowerCase();
+        int imageFile = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
 
-        return new Country(id,name,citiesCount,area,flagFile,imageFile);
+        return new Country(id, nameId, citiesCount, area, flagFile, imageFile);
     }
 }

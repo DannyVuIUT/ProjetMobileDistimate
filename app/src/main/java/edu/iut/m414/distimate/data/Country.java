@@ -2,15 +2,15 @@ package edu.iut.m414.distimate.data;
 
 public class Country {
     private String id;
-    private String name;
+    private int nameId;
     private int citiesCount;
     private int area;
     private int flag;
     private int image;
 
-    public Country(String id, String name, int citiesCount, int area, int flag, int image){
+    public Country(String id, int nameId, int citiesCount, int area, int flag, int image) {
         this.id = id;
-        this.name = name;
+        this.nameId = nameId;
         this.area = area;
         this.citiesCount = citiesCount;
         this.flag = flag;
@@ -21,8 +21,8 @@ public class Country {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public int getNameId() {
+        return nameId;
     }
 
     public int getCitiesCount() {
