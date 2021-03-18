@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="france">France</string>
+    <string name="japan">Japon</string>
+    <string name="germany">Allemagne</string>
+    <string name="states">Etats-Unis</string>
+</resources>

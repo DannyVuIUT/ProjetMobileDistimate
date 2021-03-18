@@ -1,0 +1,29 @@
+[
+	{
+		"id":"FR",
+		"name":"france",
+		"citiesCount":580,
+		"area":643801
+	}
+	,
+	{
+		"id":"JP",
+		"name":"japan",
+		"citiesCount":1101,
+		"area":377915
+	}
+	,
+	{
+		"id":"DE",
+		"name":"germany",
+		"citiesCount":743,
+		"area":357384
+	}
+	,
+	{
+		"id":"US",
+		"name":"states",
+		"citiesCount":2427,
+		"area":9833517
+	}
+]

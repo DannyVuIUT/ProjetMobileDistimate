@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">Distimate</string>
+    <string name="app_name" translatable="false">Distimate</string>
+    <string name="france">France</string>
+    <string name="japan">Nihon</string>
+    <string name="germany">Deutschland</string>
+    <string name="states">United States</string>
 </resources>
