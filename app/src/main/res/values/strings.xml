@@ -9,4 +9,8 @@
     <string name="country_name_prefix">Country: </string>
     <string name="score_prefix">Score:</string>
     <string name="time_left">Time Left</string>
+    <string name="confirm">CONFIRM</string>
+    <string name="skip">SKIP</string>
+    <string name="enter_your_guess">Enter your guess</string>
+    <string name="question_prefix">What is the distance between...</string>
 </resources>

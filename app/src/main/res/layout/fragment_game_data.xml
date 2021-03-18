@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:text="@string/country_name_prefix"/>
         <TextView
-            android:id="@+id/countryNameText"
+            android:id="@+id/gameCountryNameText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:text="@string/score_prefix"/>
         <TextView
-            android:id="@+id/scoreText"
+            android:id="@+id/gameScoreText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>

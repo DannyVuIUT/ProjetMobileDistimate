@@ -7,4 +7,8 @@
     <string name="country_name_prefix">"Pays : "</string>
     <string name="score_prefix">Score :</string>
     <string name="time_left">Temps Restant</string>
+    <string name="confirm">VALIDER</string>
+    <string name="skip">PASSER</string>
+    <string name="enter_your_guess">Saisissez votre estimation</string>
+    <string name="question_prefix">What is the distance between...</string>
 </resources>
