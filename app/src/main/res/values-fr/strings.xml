@@ -10,5 +10,6 @@
     <string name="confirm">VALIDER</string>
     <string name="skip">PASSER</string>
     <string name="enter_your_guess">Saisissez votre estimation</string>
-    <string name="question_prefix">What is the distance between...</string>
+    <string name="question_prefix">Quelle est la distance entre...</string>
+    <string name="and">et</string>
 </resources>

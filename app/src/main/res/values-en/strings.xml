@@ -11,4 +11,5 @@
     <string name="skip">SKIP</string>
     <string name="enter_your_guess">Enter your guess</string>
     <string name="question_prefix">What is the distance between...</string>
+    <string name="and">and</string>
 </resources>
