@@ -12,10 +12,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.text.NumberFormat;
 
 import edu.iut.m414.distimate.data.Country;
 import edu.iut.m414.distimate.data.CountryList;
+import edu.iut.m414.distimate.util.DataManager;
 
 public class CountryAdapter extends BaseAdapter {
     private Context context;
@@ -65,25 +65,25 @@ public class CountryAdapter extends BaseAdapter {
         countryFlag.setImageResource(currentCountry.getFlag());
         countryImage.setImageResource(currentCountry.getImage());
         countryName.setText(context.getString(currentCountry.getNameId()));
-        countryArea.setText(layoutItem.getContext().getString(R.string.area)+DataManager.formatNumber(currentCountry.getArea(),layoutItem.getContext())+" km²");
-        countryCities.setText(layoutItem.getContext().getString(R.string.cities)+DataManager.formatNumber(currentCountry.getCitiesCount(),layoutItem.getContext()));
+        countryArea.setText(layoutItem.getContext().getString(R.string.area) + DataManager.formatNumber(currentCountry.getArea(), layoutItem.getContext()) + " km²");
+        countryCities.setText(layoutItem.getContext().getString(R.string.cities) + DataManager.formatNumber(currentCountry.getCitiesCount(), layoutItem.getContext()));
 
         layoutItem.setTag(position);
 
         layoutItem.setOnClickListener((view) -> {
-            int itemPosition = (Integer)view.getTag();
+            int itemPosition = (Integer) view.getTag();
             sendListener(itemPosition);
         });
 
         return layoutItem;
     }
 
-    public void addListener(CountryAdapterListener listener){
+    public void addListener(CountryAdapterListener listener) {
         listeners.add(listener);
     }
 
-    private void sendListener(int position){
-        for(CountryAdapterListener listener : listeners){
+    private void sendListener(int position) {
+        for (CountryAdapterListener listener : listeners) {
             listener.onClickCountry(position);
         }
     }

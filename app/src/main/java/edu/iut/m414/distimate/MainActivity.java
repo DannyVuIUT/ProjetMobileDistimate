@@ -4,10 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.widget.ListView;
 
 import edu.iut.m414.distimate.data.CountryList;
+import edu.iut.m414.distimate.util.DataManager;
 
 public class MainActivity extends AppCompatActivity implements CountryAdapterListener {
     @Override
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements CountryAdapterLis
     @Override
     public void onClickCountry(int position) {
         Intent intent = new Intent(MainActivity.this, GameActivity.class);
-        intent.putExtra(DataManager.COUNTRY,position);
+        intent.putExtra(DataManager.COUNTRY, position);
         startActivity(intent);
     }
 }
