@@ -2,11 +2,9 @@ package edu.iut.m414.distimate;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
+import android.provider.ContactsContract;
 import android.widget.ListView;
 
 import edu.iut.m414.distimate.data.CountryList;
@@ -26,11 +24,8 @@ public class MainActivity extends AppCompatActivity implements CountryAdapterLis
 
     @Override
     public void onClickCountry(int position) {
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        if (Build.VERSION.SDK_INT >= 26) {
-            vibrator.vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE));
-        } else {
-            vibrator.vibrate(150);
-        }
+        Intent intent = new Intent(MainActivity.this, GameActivity.class);
+        intent.putExtra(DataManager.COUNTRY,position);
+        startActivity(intent);
     }
 }
