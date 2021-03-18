@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/country_element_height">
+
+    <ImageView
+        android:id="@+id/imageCountry"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="@dimen/country_element_height"
+        android:layout_width="@dimen/country_element_height"
+        android:layout_marginHorizontal="10dp"
+        android:contentDescription="@string/country_image" />
+
+    <ImageView
+        app:layout_constraintLeft_toRightOf="@id/imageCountry"
+        app:layout_constraintTop_toTopOf="@id/imageCountry"
+        android:id="@+id/imageFlag"
+        android:layout_height="35dp"
+        android:layout_width="50dp"
+        android:layout_marginHorizontal="10dp"
+        android:contentDescription="@string/flag_image"
+        />
+
+    <TextView
+        app:layout_constraintLeft_toRightOf="@id/imageFlag"
+        app:layout_constraintTop_toTopOf="@id/imageFlag"
+        app:layout_constraintBottom_toBottomOf="@id/imageFlag"
+        android:layout_marginHorizontal="10dp"
+        android:id="@+id/countryName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp" />
+
+    <TextView
+        app:layout_constraintLeft_toLeftOf="@id/imageFlag"
+        app:layout_constraintTop_toBottomOf="@id/countryName"
+        android:id="@+id/countryArea"
+        android:layout_marginVertical="2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17sp" />
+
+    <TextView
+        app:layout_constraintLeft_toLeftOf="@id/imageFlag"
+        app:layout_constraintTop_toBottomOf="@id/countryArea"
+        android:layout_marginVertical="2dp"
+        android:id="@+id/CountryCities"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17sp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,4 +4,6 @@
     <string name="japan">Nihon</string>
     <string name="germany">Deutschland</string>
     <string name="states">United States</string>
+    <string name="flag_image" translatable="false">Country Flag</string>
+    <string name="country_image" translatable="false">Country image</string>
 </resources>
