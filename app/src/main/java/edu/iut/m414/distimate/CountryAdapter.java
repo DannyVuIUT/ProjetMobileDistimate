@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.text.NumberFormat;
 
 import edu.iut.m414.distimate.data.Country;
 import edu.iut.m414.distimate.data.CountryList;
@@ -20,7 +20,6 @@ import edu.iut.m414.distimate.data.CountryList;
 public class CountryAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
-    private NumberFormat numberFormat;
     private List<CountryAdapterListener> listeners;
 
     public CountryAdapter(Context context) {
@@ -66,8 +65,8 @@ public class CountryAdapter extends BaseAdapter {
         countryFlag.setImageResource(currentCountry.getFlag());
         countryImage.setImageResource(currentCountry.getImage());
         countryName.setText(context.getString(currentCountry.getNameId()));
-        countryArea.setText("" + currentCountry.getArea());
-        countryCities.setText("" + currentCountry.getCitiesCount());
+        countryArea.setText(layoutItem.getContext().getString(R.string.area)+DataManager.formatNumber(currentCountry.getArea(),layoutItem.getContext())+" km²");
+        countryCities.setText(layoutItem.getContext().getString(R.string.cities)+DataManager.formatNumber(currentCountry.getCitiesCount(),layoutItem.getContext()));
 
         layoutItem.setTag(position);
 

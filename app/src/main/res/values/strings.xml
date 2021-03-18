@@ -14,4 +14,6 @@
     <string name="enter_your_guess">Enter your guess</string>
     <string name="question_prefix">What is the distance between...</string>
     <string name="and">and</string>
+    <string name="cities">"Cities: "</string>
+    <string name="area">"Area: "</string>
 </resources>
