@@ -4,4 +4,7 @@
     <string name="japan">Japan</string>
     <string name="germany">Germany</string>
     <string name="states">United States</string>
+    <string name="country_name_prefix">Country: </string>
+    <string name="score_prefix">Score:</string>
+    <string name="time_left">Time Left</string>
 </resources>
