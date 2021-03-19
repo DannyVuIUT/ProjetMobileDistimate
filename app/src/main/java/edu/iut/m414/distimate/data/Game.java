@@ -37,43 +37,29 @@ public class Game {
         currentQuestionIndex = -1;
         currentCountry = country;
         questionList.clear();
-
-        Thread[] getQuestionThreads = new Thread[MAX_GAME_SIZE];
-
+        
+        long currentTime = SystemClock.elapsedRealtime();
         for (int i = 0; i < MAX_GAME_SIZE; i++) {
             int firstCityNumber = RNG.nextInt(country.getCitiesCount());
             int secondCityNumber;
             do {
                 secondCityNumber = RNG.nextInt(country.getCitiesCount());
             } while (firstCityNumber == secondCityNumber);
-            final int finalSecondCityNumber = secondCityNumber;
 
-            getQuestionThreads[i] = new Thread(() -> {
-                City firstCity = GeoDB.requestCity(country.getId(), firstCityNumber, languageCode);
-                City secondCity = GeoDB.requestCity(country.getId(), finalSecondCityNumber, languageCode);
-                int distance = GeoDB.requestDistance(firstCity.getId(), secondCity.getId());
+            City firstCity = GeoDB.requestCity(country.getId(), firstCityNumber, languageCode);
+            City secondCity = GeoDB.requestCity(country.getId(), secondCityNumber, languageCode);
+            int distance = GeoDB.requestDistance(firstCity.getId(), secondCity.getId());
 
-                questionList.add(
-                        new DistanceQuestion(
-                                firstCity.getName(),
-                                secondCity.getName(),
-                                distance));
-            });
-            getQuestionThreads[i].start();
-        }
-
-        long currentTime = SystemClock.elapsedRealtime();
-        for (Thread t : getQuestionThreads) {
-            try {
-                t.join();
-                Log.d(TAG, "REQUEST ENDED AFTER " + (SystemClock.elapsedRealtime() - currentTime) + "ms");
-            } catch (InterruptedException e) {
-                Log.e(TAG, e.getMessage());
-            }
-        }
-
-        for (DistanceQuestion dq : questionList) {
-            Log.d(TAG, String.format("%s -> %s : %d", dq.getFrom(), dq.getTo(), dq.getRealDistance()));
+            questionList.add(
+                    new DistanceQuestion(
+                            firstCity.getName(),
+                            secondCity.getName(),
+                            distance));
+            Log.d(TAG, "REQUEST ENDED AFTER " + (SystemClock.elapsedRealtime() - currentTime) + "ms");
+            Log.d(TAG, String.format("%s -> %s : %d",
+                    questionList.get(i).getFrom(),
+                    questionList.get(i).getTo(),
+                    questionList.get(i).getRealDistance()));
         }
     }
 
