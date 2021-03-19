@@ -9,6 +9,7 @@ import java.util.Random;
 import edu.iut.m414.distimate.request.GeoDB;
 
 public class Game {
+    public static final String TAG = Game.class.getSimpleName();
     public static final long DURATION = 60;
     private static final Random RNG = new Random();
     private static final int MAX_GAME_SIZE = 15;
@@ -36,26 +37,40 @@ public class Game {
         currentCountry = country;
         questionList.clear();
 
+        Thread[] getQuestionThreads = new Thread[MAX_GAME_SIZE];
+
         for (int i = 0; i < MAX_GAME_SIZE; i++) {
             int firstCityNumber = RNG.nextInt(country.getCitiesCount());
             int secondCityNumber;
             do {
                 secondCityNumber = RNG.nextInt(country.getCitiesCount());
             } while (firstCityNumber == secondCityNumber);
+            final int finalSecondCityNumber = secondCityNumber;
 
-            City firstCity = GeoDB.requestCity(country.getId(), firstCityNumber, languageCode);
-            City secondCity = GeoDB.requestCity(country.getId(), secondCityNumber, languageCode);
-            int distance = GeoDB.requestDistance(firstCity.getId(), secondCity.getId());
+            getQuestionThreads[i] = new Thread(() -> {
+                City firstCity = GeoDB.requestCity(country.getId(), firstCityNumber, languageCode);
+                City secondCity = GeoDB.requestCity(country.getId(), finalSecondCityNumber, languageCode);
+                int distance = GeoDB.requestDistance(firstCity.getId(), secondCity.getId());
 
-            questionList.add(
-                    new DistanceQuestion(
-                            firstCity.getName(),
-                            secondCity.getName(),
-                            distance));
+                questionList.add(
+                        new DistanceQuestion(
+                                firstCity.getName(),
+                                secondCity.getName(),
+                                distance));
+            });
+            getQuestionThreads[i].start();
+        }
+
+        for (Thread t : getQuestionThreads) {
+            try {
+                t.join();
+            } catch (InterruptedException e) {
+                Log.e(TAG, e.getMessage());
+            }
         }
 
         for (DistanceQuestion dq : questionList) {
-            Log.d("GAME", String.format("%s -> %s : %d", dq.getFrom(), dq.getTo(), dq.getRealDistance()));
+            Log.d(TAG, String.format("%s -> %s : %d", dq.getFrom(), dq.getTo(), dq.getRealDistance()));
         }
     }
 
