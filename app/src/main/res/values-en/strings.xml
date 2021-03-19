@@ -20,4 +20,5 @@
     <string name="back">BACK TO MENU</string>
     <string name="loading_questions">Loading questions...</string>
     <string name="game_locale">en</string>
+    <string name="start">Start</string>
 </resources>
