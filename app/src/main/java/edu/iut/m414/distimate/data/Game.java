@@ -1,5 +1,7 @@
 package edu.iut.m414.distimate.data;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -50,6 +52,10 @@ public class Game {
                             firstCity.getName(),
                             secondCity.getName(),
                             distance));
+        }
+
+        for (DistanceQuestion dq : questionList) {
+            Log.d("GAME", String.format("%s -> %s : %d", dq.getFrom(), dq.getTo(), dq.getRealDistance()));
         }
     }
 
