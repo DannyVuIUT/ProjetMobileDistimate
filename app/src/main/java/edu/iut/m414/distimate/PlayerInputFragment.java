@@ -65,6 +65,7 @@ public class PlayerInputFragment extends Fragment {
             }
         });
 
+        setInputEnabled(true);
         return rootView;
     }
 

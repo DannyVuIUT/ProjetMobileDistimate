@@ -87,8 +87,6 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
                     .beginTransaction()
                     .replace(R.id.playerInputFrame, playerInputFragment)
                     .commit();
-
-            playerInputFragment.setInputEnabled(true);
         }
     }
 
@@ -124,8 +122,6 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
         startActivity(intent);
         finish();
     }
-
-
 
     private class LoadGameTask extends AsyncTask<Country,Void,Void> {
         private ProgressDialog progressDialog;
