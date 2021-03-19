@@ -18,4 +18,6 @@
     <string name="you_selected">"Vous avez sélectionné "</string>
     <string name="cancel">ANNULER</string>
     <string name="back">RETOUR AU MENU</string>
+    <string name="loading_questions">Chargement des questions...</string>
+    <string name="game_locale">fr</string>
 </resources>

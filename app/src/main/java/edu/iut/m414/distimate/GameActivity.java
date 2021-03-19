@@ -1,6 +1,8 @@
 package edu.iut.m414.distimate;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +32,8 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
             int countryIndex = intent.getIntExtra(DataManager.COUNTRY, 0);
             Country selectedCountry = CountryList.get(countryIndex);
             loadGameDataFragment(getString(selectedCountry.getNameId()));
+            loadGameSetupFragment();
+            new LoadGameTask().execute(selectedCountry);
         }
     }
 
@@ -112,4 +116,32 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
     public void onBackPressed() {
         moveTaskToBack(true);
     }
+
+    public class LoadGameTask extends AsyncTask<Country,Void,Void> {
+        ProgressDialog progressDialog;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(GameActivity.this);
+            progressDialog.setMessage(getString(R.string.loading_questions));
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Country... countries) {
+            Game.getInstance().initializeGameData(countries[0],getString(R.string.game_locale));
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            if (progressDialog.isShowing())
+                progressDialog.dismiss();
+            gameLoadingStateListener.onGameLoaded();
+        }
+
+    }
+
 }

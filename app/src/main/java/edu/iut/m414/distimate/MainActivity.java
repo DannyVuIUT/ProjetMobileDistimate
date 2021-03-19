@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import edu.iut.m414.distimate.data.CountryList;
 import edu.iut.m414.distimate.util.DataManager;
+import edu.iut.m414.distimate.util.VibrationManager;
 
 public class MainActivity extends AppCompatActivity implements CountryAdapterListener {
     @Override
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements CountryAdapterLis
             Intent intent = new Intent(MainActivity.this, GameActivity.class);
             intent.putExtra(DataManager.COUNTRY, position);
             startActivity(intent);
+            VibrationManager.vibrate(this);
             finish();
         });
         builder.show();
