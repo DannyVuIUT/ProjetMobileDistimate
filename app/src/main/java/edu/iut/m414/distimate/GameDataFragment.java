@@ -1,7 +1,9 @@
 package edu.iut.m414.distimate;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.os.SystemClock;
@@ -33,6 +35,12 @@ public class GameDataFragment extends Fragment {
         args.putLong(ARG_DURATION, duration);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        timeUpListener = (TimeUpListener) getActivity();
     }
 
     @Override
@@ -71,9 +79,5 @@ public class GameDataFragment extends Fragment {
 
     public void startTimer() {
         gameTimer.start();
-    }
-
-    public void setTimeUpListener(TimeUpListener timeUpListener) {
-        this.timeUpListener = timeUpListener;
     }
 }

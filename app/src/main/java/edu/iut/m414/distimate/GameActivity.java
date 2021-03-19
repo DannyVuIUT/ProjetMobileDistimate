@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -16,11 +17,13 @@ import edu.iut.m414.distimate.util.DataManager;
 import edu.iut.m414.distimate.util.DistanceGuessListener;
 import edu.iut.m414.distimate.util.GameLoadingStateListener;
 import edu.iut.m414.distimate.util.GameStartListener;
+import edu.iut.m414.distimate.util.TimeUpListener;
 import edu.iut.m414.distimate.util.VibrationManager;
 
-public class GameActivity extends AppCompatActivity implements GameStartListener, DistanceGuessListener {
+public class GameActivity extends AppCompatActivity implements GameStartListener, DistanceGuessListener, TimeUpListener {
     private GameLoadingStateListener gameLoadingStateListener;
     private PlayerInputFragment playerInputFragment;
+    private GameDataFragment gameDataFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +41,6 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
     }
 
     private void loadGameDataFragment(String countryName) {
-        Fragment gameDataFragment = getSupportFragmentManager().findFragmentById(R.id.gameDataFrame);
-
         if (gameDataFragment == null) {
             gameDataFragment = GameDataFragment.newInstance(countryName, Game.DURATION);
             getSupportFragmentManager()
@@ -50,12 +51,7 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
     }
 
     private void playNextQuestion() {
-        DistanceQuestion nextQuestion = Game.getInstance().nextQuestion();
-        if (nextQuestion != null) {
-            loadDistanceQuestionFragment(nextQuestion);
-        } else {
-            // TODO : gérer le fait qu'il n'y ait plus de question
-        }
+        new GetNextQuestionTask().execute();
     }
 
     private void loadDistanceQuestionFragment(DistanceQuestion question) {
@@ -66,6 +62,8 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
                 .beginTransaction()
                 .replace(R.id.questionAnswerFrame, distanceQuestionFragment)
                 .commit();
+
+        playerInputFragment.setInputEnabled(true);
     }
 
     private void loadGameSetupFragment() {
@@ -86,7 +84,6 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
 
         if (playerInputFragment == null) {
             playerInputFragment = new PlayerInputFragment();
-            playerInputFragment.setDistanceGuessListener(this);
 
             getSupportFragmentManager()
                     .beginTransaction()
@@ -97,17 +94,20 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
 
     @Override
     public void onGameStart() {
+        gameDataFragment.startTimer();
         loadPlayerInputFragment();
         playNextQuestion();
     }
 
     @Override
     public void onDistanceGuess(int guess) {
+        playerInputFragment.setInputEnabled(false);
         playNextQuestion();
     }
 
     @Override
     public void onSkip() {
+        playerInputFragment.setInputEnabled(false);
         playNextQuestion();
         VibrationManager.vibrate(this, 150);
     }
@@ -117,8 +117,16 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
         moveTaskToBack(true);
     }
 
-    public class LoadGameTask extends AsyncTask<Country,Void,Void> {
-        ProgressDialog progressDialog;
+    @Override
+    public void onTimeUp() {
+        Intent intent = new Intent(this, GameResultActivity.class);
+        intent.putExtra(DataManager.SCORE, Game.getCurrentScore());
+        startActivity(intent);
+        finish();
+    }
+
+    private class LoadGameTask extends AsyncTask<Country,Void,Void> {
+        private ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -130,7 +138,7 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
 
         @Override
         protected Void doInBackground(Country... countries) {
-            Game.getInstance().initializeGameData(countries[0],getString(R.string.game_locale));
+            Game.initializeGameData(countries[0],getString(R.string.game_locale));
             return null;
         }
 
@@ -141,7 +149,31 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
                 progressDialog.dismiss();
             gameLoadingStateListener.onGameLoaded();
         }
-
     }
 
+    private class GetNextQuestionTask extends AsyncTask<Void,Void,Void> {
+        private String TAG = GetNextQuestionTask.class.getSimpleName();
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            getNextQuestion();
+            return null;
+        }
+
+        private void getNextQuestion() {
+            DistanceQuestion nextQuestion = Game.nextQuestion();
+            if (nextQuestion != null) {
+                loadDistanceQuestionFragment(nextQuestion);
+            } else if (!Game.allQuestionsHaveLoaded()) {
+                try {
+                    Thread.sleep(250);
+                } catch (InterruptedException e) {
+                    Log.e(TAG, e.getMessage());
+                }
+                getNextQuestion();
+            } else {
+                // TODO : gérer le fait qu'il n'y ait plus du tout de questions
+            }
+        }
+    }
 }

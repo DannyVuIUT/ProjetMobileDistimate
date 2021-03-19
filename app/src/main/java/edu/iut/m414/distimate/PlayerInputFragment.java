@@ -1,7 +1,9 @@
 package edu.iut.m414.distimate;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
@@ -26,6 +28,12 @@ public class PlayerInputFragment extends Fragment {
 
     public PlayerInputFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        distanceGuessListener = (DistanceGuessListener) getActivity();
     }
 
     @Override
@@ -77,10 +85,6 @@ public class PlayerInputFragment extends Fragment {
 
     private void clearGuess() {
         distanceGuessValueInput.setText("");
-    }
-
-    public void setDistanceGuessListener(DistanceGuessListener distanceGuessListener) {
-        this.distanceGuessListener = distanceGuessListener;
     }
 
     public void setInputEnabled(boolean inputEnabled) {
