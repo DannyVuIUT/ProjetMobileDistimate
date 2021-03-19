@@ -23,6 +23,8 @@ public class GameDataFragment extends Fragment {
     private Chronometer gameTimer;
     private TextView currentCountryName;
     private TextView currentScore;
+    private long initialDuration;
+    private boolean started;
 
     public GameDataFragment() {
         // Required empty public constructor
@@ -55,7 +57,8 @@ public class GameDataFragment extends Fragment {
 
         if (getArguments() != null) {
             currentCountryName.setText(getArguments().getString(ARG_COUNTRY_NAME));
-            initializeTimer(getArguments().getLong(ARG_DURATION));
+            initialDuration = getArguments().getLong(ARG_DURATION);
+            initializeTimer(initialDuration);
         }
 
         return rootView;
@@ -64,9 +67,10 @@ public class GameDataFragment extends Fragment {
     private void initializeTimer(long duration) {
         gameTimer.stop();
         gameTimer.setBase(SystemClock.elapsedRealtime() + (duration * 1000));
+        started = false;
 
         gameTimer.setOnChronometerTickListener(chronometer -> {
-            if (SystemClock.elapsedRealtime() >= chronometer.getBase()) {
+            if (started && SystemClock.elapsedRealtime() >= chronometer.getBase()) {
                 timeUpListener.onTimeUp();
             }
             gameTimer.stop();
@@ -78,6 +82,8 @@ public class GameDataFragment extends Fragment {
     }
 
     public void startTimer() {
+        initializeTimer(initialDuration);
+        started = true;
         gameTimer.start();
     }
 }

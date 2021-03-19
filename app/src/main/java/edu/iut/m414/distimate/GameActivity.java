@@ -100,14 +100,18 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
     @Override
     public void onDistanceGuess(int guess) {
         playerInputFragment.setInputEnabled(false);
+        Game.updateScore(guess);
+        gameDataFragment.updateScore(Game.getCurrentScore());
+        // TODO : AFFICHER LA VRAIE REPONSE ET L'ESTIMATION
         playNextQuestion();
     }
 
     @Override
     public void onSkip() {
         playerInputFragment.setInputEnabled(false);
-        playNextQuestion();
         VibrationManager.vibrate(this, 150);
+        // TODO : AFFICHER LA VRAIE REPONSE
+        playNextQuestion();
     }
 
     @Override
