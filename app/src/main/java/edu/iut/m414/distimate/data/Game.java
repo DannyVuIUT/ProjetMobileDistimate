@@ -1,5 +1,6 @@
 package edu.iut.m414.distimate.data;
 
+import android.os.SystemClock;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -61,9 +62,11 @@ public class Game {
             getQuestionThreads[i].start();
         }
 
+        long currentTime = SystemClock.elapsedRealtime();
         for (Thread t : getQuestionThreads) {
             try {
                 t.join();
+                Log.d(TAG, "REQUEST ENDED AFTER " + (SystemClock.elapsedRealtime() - currentTime) + "ms");
             } catch (InterruptedException e) {
                 Log.e(TAG, e.getMessage());
             }
