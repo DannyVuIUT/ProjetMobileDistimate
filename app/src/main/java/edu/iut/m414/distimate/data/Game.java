@@ -12,7 +12,7 @@ import edu.iut.m414.distimate.request.GeoDB;
 
 public class Game {
     private static final String TAG = Game.class.getSimpleName();
-    private static final long INIT_WAIT_TIME = 12000;
+    private static final long INIT_WAIT_TIME = 10000;
     private static final Random RNG = new Random();
     public static final long DURATION = 20;
     private static final int MAX_GAME_SIZE = 10;
@@ -21,20 +21,17 @@ public class Game {
     private static int currentScore;
     private static int currentQuestionIndex;
     private static List<DistanceQuestion> questionList;
+    private static boolean[] continueLoading;
+    static {
+        questionList = Collections.synchronizedList(new ArrayList<>());
+        continueLoading = new boolean[] {false};
+    }
 
     private Game() {
         super();
     }
 
-    private static void inititalizeData() {
-        if (questionList == null) {
-            questionList = Collections.synchronizedList(new ArrayList<>());
-        }
-    }
-
     public static void initializeGameData(Country country, String languageCode) {
-        inititalizeData();
-
         currentScore = 0;
         currentQuestionIndex = -1;
         currentCountry = country;
@@ -43,9 +40,10 @@ public class Game {
             questionList.clear();
         }
 
+        continueLoading[0] = true;
         Thread initThread = new Thread(() -> {
             long currentTime = SystemClock.elapsedRealtime();
-            for (int i = 0; i < MAX_GAME_SIZE; i++) {
+            for (int i = 0; i < MAX_GAME_SIZE && continueLoading[0]; i++) {
                 int firstCityNumber = RNG.nextInt(country.getCitiesCount());
                 int secondCityNumber;
                 do {
@@ -55,8 +53,16 @@ public class Game {
                 long otherTime = SystemClock.elapsedRealtime();
                 City firstCity = GeoDB.requestCity(country.getId(), firstCityNumber, languageCode);
                 Log.d(TAG, "GOT FIRST CITY AFTER : " + (SystemClock.elapsedRealtime() - otherTime) + "ms");
+
+                if (!continueLoading[0])
+                    break;
+
                 City secondCity = GeoDB.requestCity(country.getId(), secondCityNumber, languageCode);
                 Log.d(TAG, "GOT SECOND CITY AFTER : " + (SystemClock.elapsedRealtime() - otherTime) + "ms");
+
+                if (!continueLoading[0])
+                    break;
+
                 int distance = GeoDB.requestDistance(firstCity.getId(), secondCity.getId());
                 Log.d(TAG, "GOT DISTANCE AFTER : " + (SystemClock.elapsedRealtime() - otherTime) + "ms");
 
@@ -86,8 +92,6 @@ public class Game {
     }
 
     public static DistanceQuestion nextQuestion() {
-        inititalizeData();
-
         synchronized (questionList) {
             if (currentQuestionIndex + 1 >= questionList.size()) {
                 return null;
@@ -99,8 +103,6 @@ public class Game {
     }
 
     public static DistanceQuestion getCurrentQuestion() {
-        inititalizeData();
-
         synchronized (questionList) {
             if (currentQuestionIndex < questionList.size()) {
                 return questionList.get(currentQuestionIndex);
@@ -111,8 +113,6 @@ public class Game {
     }
 
     public static DistanceQuestion[] getShownQuestions() {
-        inititalizeData();
-
         return questionList.subList(0, currentQuestionIndex + 1).toArray(new DistanceQuestion[0]);
     }
 
@@ -123,15 +123,11 @@ public class Game {
     }
 
     private static int computeScore(int distanceGuess) {
-        inititalizeData();
-
         DistanceQuestion currentQuestion = questionList.get(currentQuestionIndex);
         return Math.abs(currentQuestion.getRealDistance() - distanceGuess);
     }
 
     public static boolean allQuestionsHaveLoaded() {
-        inititalizeData();
-
         synchronized (questionList) {
             return questionList.size() >= MAX_GAME_SIZE;
         }
@@ -139,5 +135,9 @@ public class Game {
 
     public static int getCurrentScore() {
         return currentScore;
+    }
+
+    public static void notifyStopLoading() {
+        continueLoading[0] = false;
     }
 }

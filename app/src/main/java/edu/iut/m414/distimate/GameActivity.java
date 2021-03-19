@@ -128,6 +128,7 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
 
     @Override
     public void onTimeUp() {
+        Game.notifyStopLoading();
         Intent intent = new Intent(this, GameResultActivity.class);
         intent.putExtra(DataManager.SCORE, Game.getCurrentScore());
         startActivity(intent);

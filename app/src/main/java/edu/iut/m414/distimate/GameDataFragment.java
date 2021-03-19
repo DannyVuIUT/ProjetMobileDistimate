@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
+import edu.iut.m414.distimate.util.DataManager;
 import edu.iut.m414.distimate.util.TimeUpListener;
 
 public class GameDataFragment extends Fragment {
@@ -66,7 +67,7 @@ public class GameDataFragment extends Fragment {
 
     private void initializeTimer(long duration) {
         gameTimer.stop();
-        gameTimer.setBase(SystemClock.elapsedRealtime() + (duration * 1000));
+        gameTimer.setBase(SystemClock.elapsedRealtime() + (duration * 1000) + 500);
         started = false;
 
         gameTimer.setOnChronometerTickListener(chronometer -> {
@@ -78,7 +79,7 @@ public class GameDataFragment extends Fragment {
     }
 
     public void updateScore(int score) {
-        currentScore.setText(String.valueOf(score));
+        currentScore.setText(DataManager.formatNumber(score, getContext()));
     }
 
     public void startTimer() {
