@@ -62,6 +62,14 @@ public class Game {
         }
     }
 
+    public DistanceQuestion getCurrentQuestion() {
+        if (currentQuestionIndex < questionList.size()) {
+            return questionList.get(currentQuestionIndex);
+        } else {
+            return null;
+        }
+    }
+
     public DistanceQuestion[] getShownQuestions() {
         return questionList.subList(0, currentQuestionIndex + 1).toArray(new DistanceQuestion[0]);
     }

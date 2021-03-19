@@ -8,12 +8,17 @@ import androidx.fragment.app.Fragment;
 
 import edu.iut.m414.distimate.data.Country;
 import edu.iut.m414.distimate.data.CountryList;
+import edu.iut.m414.distimate.data.DistanceQuestion;
 import edu.iut.m414.distimate.data.Game;
 import edu.iut.m414.distimate.util.DataManager;
+import edu.iut.m414.distimate.util.DistanceGuessListener;
 import edu.iut.m414.distimate.util.GameLoadingStateListener;
+import edu.iut.m414.distimate.util.GameStartListener;
+import edu.iut.m414.distimate.util.VibrationManager;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity implements GameStartListener, DistanceGuessListener {
     private GameLoadingStateListener gameLoadingStateListener;
+    private PlayerInputFragment playerInputFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,25 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    private void playNextQuestion() {
+        DistanceQuestion nextQuestion = Game.getInstance().nextQuestion();
+        if (nextQuestion != null) {
+            loadDistanceQuestionFragment(nextQuestion);
+        } else {
+            // TODO : gérer le fait qu'il n'y ait plus de question
+        }
+    }
+
+    private void loadDistanceQuestionFragment(DistanceQuestion question) {
+        DistanceQuestionFragment distanceQuestionFragment =
+                DistanceQuestionFragment.newInstance(question.getFrom(), question.getTo());
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.questionAnswerFrame, distanceQuestionFragment)
+                .commit();
+    }
+
     private void loadGameSetupFragment() {
         Fragment middleFragment = getSupportFragmentManager().findFragmentById(R.id.questionAnswerFrame);
         if (middleFragment == null) {
@@ -54,15 +78,34 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void loadPlayerInputFragment() {
-        Fragment playerInputFragment = getSupportFragmentManager().findFragmentById(R.id.playerInputFrame);
+        playerInputFragment = (PlayerInputFragment)getSupportFragmentManager().findFragmentById(R.id.playerInputFrame);
 
         if (playerInputFragment == null) {
             playerInputFragment = new PlayerInputFragment();
+            playerInputFragment.setDistanceGuessListener(this);
+
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.playerInputFrame, playerInputFragment)
                     .commit();
         }
+    }
+
+    @Override
+    public void onGameStart() {
+        loadPlayerInputFragment();
+        playNextQuestion();
+    }
+
+    @Override
+    public void onDistanceGuess(int guess) {
+        playNextQuestion();
+    }
+
+    @Override
+    public void onSkip() {
+        playNextQuestion();
+        VibrationManager.vibrate(this, 150);
     }
 
     @Override
