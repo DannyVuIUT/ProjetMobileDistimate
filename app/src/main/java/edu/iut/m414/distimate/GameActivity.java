@@ -62,6 +62,8 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
                 .beginTransaction()
                 .replace(R.id.questionAnswerFrame, distanceQuestionFragment)
                 .commit();
+
+        playerInputFragment.setInputEnabled(true);
     }
 
     private void loadGameSetupFragment() {

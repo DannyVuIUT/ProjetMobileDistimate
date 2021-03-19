@@ -91,6 +91,9 @@ public class PlayerInputFragment extends Fragment {
 
     public void setInputEnabled(boolean inputEnabled) {
         distanceGuessValueInput.setEnabled(inputEnabled);
+        if (inputEnabled) {
+            distanceGuessValueInput.requestFocus();
+        }
         distanceGuessSkipButton.setEnabled(inputEnabled);
     }
 }
