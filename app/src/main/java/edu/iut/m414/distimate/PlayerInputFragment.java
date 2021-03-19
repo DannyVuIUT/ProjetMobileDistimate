@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -49,7 +50,7 @@ public class PlayerInputFragment extends Fragment {
         distanceGuessSkipButton.setOnClickListener(v -> skipDistanceGuess());
 
         distanceGuessValueInput = rootView.findViewById(R.id.distanceGuessValueInput);
-        distanceGuessValueInput.requestFocus();
+        requestInputFocus();
         distanceGuessValueInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -93,8 +94,15 @@ public class PlayerInputFragment extends Fragment {
     public void setInputEnabled(boolean inputEnabled) {
         distanceGuessValueInput.setEnabled(inputEnabled);
         if (inputEnabled) {
-            distanceGuessValueInput.requestFocus();
+            requestInputFocus();
         }
         distanceGuessSkipButton.setEnabled(inputEnabled);
+    }
+
+    private void requestInputFocus() {
+        distanceGuessValueInput.requestFocus();
+        InputMethodManager inputMethodManager =
+                (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
 }
