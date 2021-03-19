@@ -37,7 +37,7 @@ public class Game {
         currentQuestionIndex = -1;
         currentCountry = country;
         questionList.clear();
-        
+
         long currentTime = SystemClock.elapsedRealtime();
         for (int i = 0; i < MAX_GAME_SIZE; i++) {
             int firstCityNumber = RNG.nextInt(country.getCitiesCount());
@@ -46,9 +46,13 @@ public class Game {
                 secondCityNumber = RNG.nextInt(country.getCitiesCount());
             } while (firstCityNumber == secondCityNumber);
 
+            long otherTime = SystemClock.elapsedRealtime();
             City firstCity = GeoDB.requestCity(country.getId(), firstCityNumber, languageCode);
+            Log.d(TAG, "GOT FIRST CITY AFTER : " + (SystemClock.elapsedRealtime() - otherTime) + "ms");
             City secondCity = GeoDB.requestCity(country.getId(), secondCityNumber, languageCode);
+            Log.d(TAG, "GOT SECOND CITY AFTER : " + (SystemClock.elapsedRealtime() - otherTime) + "ms");
             int distance = GeoDB.requestDistance(firstCity.getId(), secondCity.getId());
+            Log.d(TAG, "GOT DISTANCE AFTER : " + (SystemClock.elapsedRealtime() - otherTime) + "ms");
 
             questionList.add(
                     new DistanceQuestion(
