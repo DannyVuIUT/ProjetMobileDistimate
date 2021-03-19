@@ -4,6 +4,7 @@ import android.os.SystemClock;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -29,7 +30,7 @@ public class Game {
     }
 
     private Game() {
-        questionList = new ArrayList<>();
+        questionList = Collections.synchronizedList(new ArrayList<>());
     }
 
     public void initializeGameData(Country country, String languageCode) {
@@ -54,11 +55,14 @@ public class Game {
             int distance = GeoDB.requestDistance(firstCity.getId(), secondCity.getId());
             Log.d(TAG, "GOT DISTANCE AFTER : " + (SystemClock.elapsedRealtime() - otherTime) + "ms");
 
-            questionList.add(
-                    new DistanceQuestion(
-                            firstCity.getName(),
-                            secondCity.getName(),
-                            distance));
+            synchronized (questionList) {
+                questionList.add(
+                        new DistanceQuestion(
+                                firstCity.getName(),
+                                secondCity.getName(),
+                                distance));
+            }
+
             Log.d(TAG, "REQUEST ENDED AFTER " + (SystemClock.elapsedRealtime() - currentTime) + "ms");
             Log.d(TAG, String.format("%s -> %s : %d",
                     questionList.get(i).getFrom(),
@@ -68,19 +72,23 @@ public class Game {
     }
 
     public DistanceQuestion nextQuestion() {
-        if (currentQuestionIndex + 1 >= questionList.size()) {
-            return null;
-        } else {
-            currentQuestionIndex++;
-            return questionList.get(currentQuestionIndex);
+        synchronized (questionList) {
+            if (currentQuestionIndex + 1 >= questionList.size()) {
+                return null;
+            } else {
+                currentQuestionIndex++;
+                return questionList.get(currentQuestionIndex);
+            }
         }
     }
 
     public DistanceQuestion getCurrentQuestion() {
-        if (currentQuestionIndex < questionList.size()) {
-            return questionList.get(currentQuestionIndex);
-        } else {
-            return null;
+        synchronized (questionList) {
+            if (currentQuestionIndex < questionList.size()) {
+                return questionList.get(currentQuestionIndex);
+            } else {
+                return null;
+            }
         }
     }
 
@@ -97,5 +105,11 @@ public class Game {
     private int computeScore(int distanceGuess) {
         DistanceQuestion currentQuestion = questionList.get(currentQuestionIndex);
         return Math.abs(currentQuestion.getRealDistance() - distanceGuess);
+    }
+
+    public boolean haveAllQuestionsLoaded() {
+        synchronized (questionList) {
+            return questionList.size() >= MAX_GAME_SIZE;
+        }
     }
 }
