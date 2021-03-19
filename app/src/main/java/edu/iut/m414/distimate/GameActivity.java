@@ -173,7 +173,7 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
             DistanceQuestion nextQuestion = Game.nextQuestion();
             if (nextQuestion != null) {
                 loadDistanceQuestionFragment(nextQuestion);
-                playerInputFragment.setInputEnabled(true);
+                runOnUiThread(() -> playerInputFragment.setInputEnabled(true));
             } else if (!Game.allQuestionsHaveLoaded()) {
                 try {
                     Thread.sleep(250);

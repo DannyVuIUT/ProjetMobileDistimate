@@ -49,6 +49,7 @@ public class PlayerInputFragment extends Fragment {
         distanceGuessSkipButton.setOnClickListener(v -> skipDistanceGuess());
 
         distanceGuessValueInput = rootView.findViewById(R.id.distanceGuessValueInput);
+        distanceGuessValueInput.requestFocus();
         distanceGuessValueInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
