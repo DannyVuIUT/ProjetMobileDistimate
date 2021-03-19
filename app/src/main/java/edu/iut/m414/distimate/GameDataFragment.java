@@ -14,6 +14,9 @@ import android.widget.TextView;
 import edu.iut.m414.distimate.util.TimeUpListener;
 
 public class GameDataFragment extends Fragment {
+    private static final String ARG_COUNTRY_NAME = "countryName";
+    private static final String ARG_DURATION = "duration";
+
     private TimeUpListener timeUpListener;
     private Chronometer gameTimer;
     private TextView currentCountryName;
@@ -21,6 +24,15 @@ public class GameDataFragment extends Fragment {
 
     public GameDataFragment() {
         // Required empty public constructor
+    }
+
+    public static GameDataFragment newInstance(String countryName, long duration) {
+        GameDataFragment fragment = new GameDataFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_COUNTRY_NAME, countryName);
+        args.putLong(ARG_DURATION, duration);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -33,20 +45,17 @@ public class GameDataFragment extends Fragment {
         currentCountryName = rootView.findViewById(R.id.gameCountryNameText);
         currentScore = rootView.findViewById(R.id.gameScoreText);
 
+        if (getArguments() != null) {
+            currentCountryName.setText(getArguments().getString(ARG_COUNTRY_NAME));
+            initializeTimer(getArguments().getLong(ARG_DURATION));
+        }
+
         return rootView;
     }
 
-    public void updateScore(int score) {
-        currentScore.setText(String.valueOf(score));
-    }
-
-    public void updateCountryName(String name) {
-        currentCountryName.setText(name);
-    }
-
-    public void initializeTimer(long time) {
+    private void initializeTimer(long duration) {
         gameTimer.stop();
-        gameTimer.setBase(SystemClock.elapsedRealtime() + (time * 1000));
+        gameTimer.setBase(SystemClock.elapsedRealtime() + (duration * 1000));
 
         gameTimer.setOnChronometerTickListener(chronometer -> {
             if (SystemClock.elapsedRealtime() >= chronometer.getBase()) {
@@ -54,6 +63,10 @@ public class GameDataFragment extends Fragment {
             }
             gameTimer.stop();
         });
+    }
+
+    public void updateScore(int score) {
+        currentScore.setText(String.valueOf(score));
     }
 
     public void startTimer() {

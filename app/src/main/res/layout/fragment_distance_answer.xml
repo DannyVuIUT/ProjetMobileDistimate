@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:layout_marginHorizontal="20dp"
-    tools:context=".DistanceQuestionFragment">
+    tools:context=".DistanceAnswerFragment">
 
     <TextView
         android:layout_width="match_parent"
@@ -14,16 +14,16 @@
         android:autoSizeTextType="uniform"
         android:gravity="bottom|center_horizontal"
         android:textAlignment="gravity"
-        android:text="@string/question_prefix"/>
+        android:text="La distance était"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/firstCityNameText"
+            android:id="@+id/realDistanceText"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:autoSizeTextType="uniform"
             android:gravity="center"
             android:textAlignment="gravity"/>
@@ -33,14 +33,14 @@
             android:autoSizeTextType="uniform"
             android:gravity="center"
             android:textAlignment="gravity"
-            android:text="@string/and"/>
+            android:text="vous aviez deviné"/>
         <TextView
-            android:id="@+id/secondCityNameText"
+            android:id="@+id/guessedDistanceText"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="35dp"
             android:autoSizeTextType="uniform"
             android:gravity="center"
-            android:textAlignment="gravity" />
+            android:textAlignment="gravity"/>
     </LinearLayout>
 
 </LinearLayout>

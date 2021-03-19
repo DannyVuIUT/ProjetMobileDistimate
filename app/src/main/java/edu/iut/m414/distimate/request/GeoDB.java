@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import edu.iut.m414.distimate.data.City;
 
 public final class GeoDB {
-    private static final String TAG = HttpHandler.class.getSimpleName();
+    private static final String TAG = GeoDB.class.getSimpleName();
     private static final String MAIN_LINK = "http://geodb-free-service.wirefreethought.com/v1/geo/";
 
     private GeoDB() {

@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center_horizontal"
     tools:context=".PlayerInputFragment">
 
     <EditText
-        android:id="@+id/distanceGuessValue"
+        android:id="@+id/distanceGuessValueInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
@@ -21,13 +21,13 @@
         android:orientation="horizontal"
         android:layout_marginHorizontal="10dp">
         <Button
-            android:id="@+id/distanceGuessCancelButton"
+            android:id="@+id/distanceGuessConfirmButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/confirm"/>
         <Button
-            android:id="@+id/distanceGuessConfirmButton"
+            android:id="@+id/distanceGuessSkipButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"

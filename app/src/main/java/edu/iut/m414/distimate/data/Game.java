@@ -11,16 +11,26 @@ public class Game {
     private static final Random RNG = new Random();
     private static final int MAX_GAME_SIZE = 15;
 
+    public static Game instance;
+
     private List<DistanceQuestion> questionList;
     private Country currentCountry;
     private int currentScore;
+    private int currentQuestionIndex;
 
-    public Game() {
+    public static Game getInstance() {
+        if (instance == null)
+            instance = new Game();
+        return instance;
+    }
+
+    private Game() {
         questionList = new ArrayList<>();
     }
 
     public void initializeGameData(Country country, String languageCode) {
         currentScore = 0;
+        currentQuestionIndex = -1;
         currentCountry = country;
         questionList.clear();
 
@@ -44,20 +54,26 @@ public class Game {
     }
 
     public DistanceQuestion nextQuestion() {
-        if (questionList.isEmpty()) {
+        if (currentQuestionIndex + 1 >= questionList.size()) {
             return null;
         } else {
-            return questionList.remove(0);
+            currentQuestionIndex++;
+            return questionList.get(currentQuestionIndex);
         }
     }
 
-    public int updateScore(DistanceQuestion question, int distanceGuess) {
-        int guessScore = computeScore(question, distanceGuess);
+    public DistanceQuestion[] getShownQuestions() {
+        return questionList.subList(0, currentQuestionIndex + 1).toArray(new DistanceQuestion[0]);
+    }
+
+    public int updateScore(int distanceGuess) {
+        int guessScore = computeScore(distanceGuess);
         currentScore += guessScore;
         return guessScore;
     }
 
-    private int computeScore(DistanceQuestion question, int distanceGuess) {
-        return Math.abs(question.getRealDistance() - distanceGuess);
+    private int computeScore(int distanceGuess) {
+        DistanceQuestion currentQuestion = questionList.get(currentQuestionIndex);
+        return Math.abs(currentQuestion.getRealDistance() - distanceGuess);
     }
 }
