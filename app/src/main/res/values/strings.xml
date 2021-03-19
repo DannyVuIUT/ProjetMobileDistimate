@@ -20,4 +20,6 @@
     <string name="you_selected">"You selected "</string>
     <string name="cancel">CANCEL</string>
     <string name="back">BACK TO MENU</string>
+    <string name="loading_questions">Loading questions...</string>
+    <string name="game_locale">en</string>
 </resources>
