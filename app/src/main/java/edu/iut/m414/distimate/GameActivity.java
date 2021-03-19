@@ -10,8 +10,11 @@ import edu.iut.m414.distimate.data.Country;
 import edu.iut.m414.distimate.data.CountryList;
 import edu.iut.m414.distimate.data.Game;
 import edu.iut.m414.distimate.util.DataManager;
+import edu.iut.m414.distimate.util.GameLoadingStateListener;
 
 public class GameActivity extends AppCompatActivity {
+    private GameLoadingStateListener gameLoadingStateListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +36,19 @@ public class GameActivity extends AppCompatActivity {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.gameDataFrame, gameDataFragment)
+                    .commit();
+        }
+    }
+
+    private void loadGameSetupFragment() {
+        Fragment middleFragment = getSupportFragmentManager().findFragmentById(R.id.questionAnswerFrame);
+        if (middleFragment == null) {
+            middleFragment = new GameSetupFragment();
+            gameLoadingStateListener = (GameLoadingStateListener)middleFragment;
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.questionAnswerFrame, middleFragment)
                     .commit();
         }
     }
