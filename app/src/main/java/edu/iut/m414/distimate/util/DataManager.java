@@ -7,6 +7,7 @@ import java.text.NumberFormat;
 
 public final class DataManager {
     public static final String COUNTRY = "country";
+    public static final String SCORE = "score";
 
     private DataManager() {
     }

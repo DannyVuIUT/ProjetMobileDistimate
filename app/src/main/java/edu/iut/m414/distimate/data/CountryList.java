@@ -73,14 +73,14 @@ public class CountryList {
 
     private static Country getCountryFromJSONObject(JSONObject jsonObject, Context context) throws JSONException {
         String id = jsonObject.getString("id");
-        int nameId = context.getResources().getIdentifier(jsonObject.getString("name"),"string",context.getPackageName());
+        int nameId = context.getResources().getIdentifier(jsonObject.getString("name"), "string", context.getPackageName());
         int citiesCount = jsonObject.getInt("citiesCount");
         int area = jsonObject.getInt("area");
         String flagName = "flag_" + id.toLowerCase();
         int flagFile = context.getResources().getIdentifier(flagName, "drawable", context.getPackageName());
         String imageName = "image_" + id.toLowerCase();
         int imageFile = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
-
-        return new Country(id, nameId, citiesCount, area, flagFile, imageFile);
+        int baseDistance = jsonObject.getInt("baseDistance");
+        return new Country(id, nameId, citiesCount, area, flagFile, imageFile, baseDistance);
     }
 }

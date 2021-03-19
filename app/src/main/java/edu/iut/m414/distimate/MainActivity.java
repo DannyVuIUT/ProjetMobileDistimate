@@ -1,9 +1,11 @@
 package edu.iut.m414.distimate;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 
 import edu.iut.m414.distimate.data.CountryList;
@@ -24,8 +26,16 @@ public class MainActivity extends AppCompatActivity implements CountryAdapterLis
 
     @Override
     public void onClickCountry(int position) {
-        Intent intent = new Intent(MainActivity.this, GameActivity.class);
-        intent.putExtra(DataManager.COUNTRY, position);
-        startActivity(intent);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.country);
+        builder.setMessage(getString(R.string.you_selected) + getString(CountryList.get(position).getNameId()));
+        builder.setNegativeButton(R.string.cancel,null);
+        builder.setPositiveButton(R.string.confirm, (dialog, which) -> {
+            Intent intent = new Intent(MainActivity.this, GameActivity.class);
+            intent.putExtra(DataManager.COUNTRY, position);
+            startActivity(intent);
+            finish();
+        });
+        builder.show();
     }
 }

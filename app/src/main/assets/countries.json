@@ -3,27 +3,31 @@
 		"id":"FR",
 		"name":"france",
 		"citiesCount":580,
-		"area":643801
+		"area":643801,
+		"baseDistance":350
 	}
 	,
 	{
 		"id":"JP",
 		"name":"japan",
 		"citiesCount":1101,
-		"area":377915
+		"area":377915,
+		"baseDistance":600
 	}
 	,
 	{
 		"id":"DE",
 		"name":"germany",
 		"citiesCount":743,
-		"area":357384
+		"area":357384,
+		"baseDistance":300
 	}
 	,
 	{
 		"id":"US",
 		"name":"states",
 		"citiesCount":2427,
-		"area":9833517
+		"area":9833517,
+		"baseDistance":1100
 	}
 ]

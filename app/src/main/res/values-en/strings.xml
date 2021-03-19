@@ -5,7 +5,7 @@
     <string name="germany">Germany</string>
     <string name="states">United States</string>
     <string name="country_name_prefix">Country: </string>
-    <string name="score_prefix">Score:</string>
+    <string name="score_prefix">"Score: "</string>
     <string name="time_left">Time Left</string>
     <string name="confirm">CONFIRM</string>
     <string name="skip">SKIP</string>
@@ -14,4 +14,8 @@
     <string name="and">and</string>
     <string name="cities">"Cities: "</string>
     <string name="area">"Area: "</string>
+    <string name="country">Country</string>
+    <string name="you_selected">"You Selected "</string>
+    <string name="cancel">CANCEL</string>
+    <string name="back">BACK TO MENU</string>
 </resources>

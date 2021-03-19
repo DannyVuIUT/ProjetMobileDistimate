@@ -5,7 +5,7 @@
     <string name="germany">Allemagne</string>
     <string name="states">Etats-Unis</string>
     <string name="country_name_prefix">"Pays : "</string>
-    <string name="score_prefix">Score :</string>
+    <string name="score_prefix">"Score : "</string>
     <string name="time_left">Temps Restant</string>
     <string name="confirm">VALIDER</string>
     <string name="skip">PASSER</string>
@@ -14,4 +14,8 @@
     <string name="and">et</string>
     <string name="cities">"Villes : "</string>
     <string name="area">"Superficie : "</string>
+    <string name="country">Pays</string>
+    <string name="you_selected">"Vous avez sélectionné "</string>
+    <string name="cancel">ANNULER</string>
+    <string name="back">RETOUR AU MENU</string>
 </resources>
