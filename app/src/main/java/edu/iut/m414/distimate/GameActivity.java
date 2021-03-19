@@ -62,8 +62,6 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
                 .beginTransaction()
                 .replace(R.id.questionAnswerFrame, distanceQuestionFragment)
                 .commit();
-
-        playerInputFragment.setInputEnabled(true);
     }
 
     private void loadGameSetupFragment() {
@@ -76,6 +74,8 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
                     .beginTransaction()
                     .replace(R.id.questionAnswerFrame, middleFragment)
                     .commit();
+
+            playerInputFragment.setInputEnabled(true);
         }
     }
 
@@ -124,6 +124,8 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
         startActivity(intent);
         finish();
     }
+
+
 
     private class LoadGameTask extends AsyncTask<Country,Void,Void> {
         private ProgressDialog progressDialog;
