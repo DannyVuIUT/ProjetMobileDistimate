@@ -72,8 +72,8 @@ public class GameDataFragment extends Fragment {
         gameTimer.setOnChronometerTickListener(chronometer -> {
             if (started && SystemClock.elapsedRealtime() >= chronometer.getBase()) {
                 timeUpListener.onTimeUp();
+                gameTimer.stop();
             }
-            gameTimer.stop();
         });
     }
 
