@@ -87,4 +87,10 @@ public class GameDataFragment extends Fragment {
         started = true;
         gameTimer.start();
     }
+
+    public void decreaseTimer(long duration) {
+        gameTimer.setBase(
+                Math.max(gameTimer.getBase() - (duration * 1000),
+                        SystemClock.elapsedRealtime()));
+    }
 }

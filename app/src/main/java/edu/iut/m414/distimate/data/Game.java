@@ -15,6 +15,7 @@ public class Game {
     private static final long INIT_WAIT_TIME = 10000;
     private static final Random RNG = new Random();
     public static final long DURATION = 20;
+    public static final long PENALTY_DURATION = 3;
     private static final int MAX_GAME_SIZE = 10;
 
     private static Country currentCountry;

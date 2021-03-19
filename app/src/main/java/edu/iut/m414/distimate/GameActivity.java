@@ -117,6 +117,7 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
     public void onSkip() {
         playerInputFragment.setInputEnabled(false);
         VibrationManager.vibrate(this, 150);
+        gameDataFragment.decreaseTimer(Game.PENALTY_DURATION);
         // TODO : AFFICHER LA VRAIE REPONSE
         playNextQuestion();
     }
