@@ -14,8 +14,8 @@ public class Game {
     private static final String TAG = Game.class.getSimpleName();
     private static final long INIT_WAIT_TIME = 12000;
     private static final Random RNG = new Random();
-    public static final long DURATION = 60;
-    private static final int MAX_GAME_SIZE = 15;
+    public static final long DURATION = 20;
+    private static final int MAX_GAME_SIZE = 10;
 
     private static Country currentCountry;
     private static int currentScore;
@@ -38,7 +38,10 @@ public class Game {
         currentScore = 0;
         currentQuestionIndex = -1;
         currentCountry = country;
-        questionList.clear();
+
+        synchronized (questionList) {
+            questionList.clear();
+        }
 
         Thread initThread = new Thread(() -> {
             long currentTime = SystemClock.elapsedRealtime();
@@ -72,6 +75,8 @@ public class Game {
                         questionList.get(i).getRealDistance()));
             }
         });
+        initThread.setDaemon(true);
+        initThread.start();
 
         try {
             Thread.sleep(INIT_WAIT_TIME);
