@@ -24,6 +24,7 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
     private GameLoadingStateListener gameLoadingStateListener;
     private PlayerInputFragment playerInputFragment;
     private GameDataFragment gameDataFragment;
+    private boolean gameHasStarted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
             loadGameDataFragment(getString(selectedCountry.getNameId()));
             loadGameSetupFragment();
             new LoadGameTask().execute(selectedCountry);
+            gameHasStarted = false;
         }
     }
 
@@ -51,19 +53,22 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
     }
 
     private void playNextQuestion() {
-        new GetNextQuestionTask().execute();
+        if (gameHasStarted) {
+            new GetNextQuestionTask().execute();
+        } else {
+            DistanceQuestion nextQuestion = Game.nextQuestion();
+            loadDistanceQuestionFragment(nextQuestion);
+            gameHasStarted = true;
+        }
     }
 
     private void loadDistanceQuestionFragment(DistanceQuestion question) {
         DistanceQuestionFragment distanceQuestionFragment =
                 DistanceQuestionFragment.newInstance(question.getFrom(), question.getTo());
-
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.questionAnswerFrame, distanceQuestionFragment)
                 .commit();
-
-        playerInputFragment.setInputEnabled(true);
     }
 
     private void loadGameSetupFragment() {
@@ -168,6 +173,7 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
             DistanceQuestion nextQuestion = Game.nextQuestion();
             if (nextQuestion != null) {
                 loadDistanceQuestionFragment(nextQuestion);
+                playerInputFragment.setInputEnabled(true);
             } else if (!Game.allQuestionsHaveLoaded()) {
                 try {
                     Thread.sleep(250);
