@@ -43,6 +43,7 @@ public class PlayerInputFragment extends Fragment {
 
         distanceGuessConfirmButton = rootView.findViewById(R.id.distanceGuessConfirmButton);
         distanceGuessConfirmButton.setOnClickListener(v -> confirmDistanceGuess());
+        distanceGuessConfirmButton.setEnabled(false);
 
         distanceGuessSkipButton = rootView.findViewById(R.id.distanceGuessSkipButton);
         distanceGuessSkipButton.setOnClickListener(v -> skipDistanceGuess());
