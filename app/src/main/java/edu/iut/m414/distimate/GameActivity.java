@@ -74,8 +74,6 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
                     .beginTransaction()
                     .replace(R.id.questionAnswerFrame, middleFragment)
                     .commit();
-
-            playerInputFragment.setInputEnabled(true);
         }
     }
 
@@ -89,6 +87,8 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
                     .beginTransaction()
                     .replace(R.id.playerInputFrame, playerInputFragment)
                     .commit();
+
+            playerInputFragment.setInputEnabled(true);
         }
     }
 
