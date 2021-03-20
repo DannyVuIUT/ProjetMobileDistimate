@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import edu.iut.m414.distimate.util.DataManager;
 import edu.iut.m414.distimate.util.TimeUpListener;
+import edu.iut.m414.distimate.util.Utilities;
 
 public class GameDataFragment extends Fragment {
     private static final String ARG_COUNTRY_NAME = "countryName";
@@ -80,7 +81,7 @@ public class GameDataFragment extends Fragment {
     }
 
     public void updateScore(int score) {
-        currentScore.setText(DataManager.formatNumber(score, getContext()));
+        currentScore.setText(Utilities.formatNumber(score, getContext()));
     }
 
     public void startTimer() {

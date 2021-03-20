@@ -16,6 +16,7 @@ import java.util.List;
 import edu.iut.m414.distimate.data.Country;
 import edu.iut.m414.distimate.data.CountryList;
 import edu.iut.m414.distimate.util.DataManager;
+import edu.iut.m414.distimate.util.Utilities;
 
 public class CountryAdapter extends BaseAdapter {
     private Context context;
@@ -65,8 +66,8 @@ public class CountryAdapter extends BaseAdapter {
         countryFlag.setImageResource(currentCountry.getFlag());
         countryImage.setImageResource(currentCountry.getImage());
         countryName.setText(context.getString(currentCountry.getNameId()));
-        countryArea.setText(layoutItem.getContext().getString(R.string.area) + DataManager.formatNumber(currentCountry.getArea(), layoutItem.getContext()) + " km²");
-        countryCities.setText(layoutItem.getContext().getString(R.string.cities) + DataManager.formatNumber(currentCountry.getCitiesCount(), layoutItem.getContext()));
+        countryArea.setText(layoutItem.getContext().getString(R.string.area) + Utilities.formatNumber(currentCountry.getArea(), layoutItem.getContext()) + " km²");
+        countryCities.setText(layoutItem.getContext().getString(R.string.cities) + Utilities.formatNumber(currentCountry.getCitiesCount(), layoutItem.getContext()));
 
         layoutItem.setTag(position);
 

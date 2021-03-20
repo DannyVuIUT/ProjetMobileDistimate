@@ -9,21 +9,18 @@ import java.util.List;
 import java.util.Random;
 
 import edu.iut.m414.distimate.request.GeoDB;
+import edu.iut.m414.distimate.util.DataManager;
+import edu.iut.m414.distimate.util.Utilities;
 
 public class Game {
     private static final String TAG = Game.class.getSimpleName();
-    private static final long INIT_WAIT_TIME = 10000;
     private static final Random RNG = new Random();
-    public static final long ANSWER_WAIT_TIME = 1500;
-    public static final long DURATION = 20000;
-    public static final long PENALTY_DURATION = 3000;
-    private static final int MAX_GAME_SIZE = 10;
 
     private static Country currentCountry;
     private static int currentScore;
     private static int currentQuestionIndex;
-    private static List<DistanceQuestion> questionList;
-    private static boolean[] continueLoading;
+    private static final List<DistanceQuestion> questionList;
+    private static final boolean[] continueLoading;
     static {
         questionList = Collections.synchronizedList(new ArrayList<>());
         continueLoading = new boolean[] {false};
@@ -45,7 +42,7 @@ public class Game {
         continueLoading[0] = true;
         Thread initThread = new Thread(() -> {
             long currentTime = SystemClock.elapsedRealtime();
-            for (int i = 0; i < MAX_GAME_SIZE && continueLoading[0]; i++) {
+            for (int i = 0; i < DataManager.MAX_GAME_SIZE && continueLoading[0]; i++) {
                 int firstCityNumber = RNG.nextInt(country.getCitiesCount());
                 int secondCityNumber;
                 do {
@@ -86,11 +83,7 @@ public class Game {
         initThread.setDaemon(true);
         initThread.start();
 
-        try {
-            Thread.sleep(INIT_WAIT_TIME);
-        } catch (InterruptedException e) {
-            Log.e(TAG, e.getMessage());
-        }
+        Utilities.waitDelay(DataManager.INIT_WAIT_TIME, TAG);
     }
 
     public static DistanceQuestion nextQuestion() {
@@ -131,7 +124,7 @@ public class Game {
 
     public static boolean allQuestionsHaveLoaded() {
         synchronized (questionList) {
-            return questionList.size() >= MAX_GAME_SIZE;
+            return questionList.size() >= DataManager.MAX_GAME_SIZE;
         }
     }
 

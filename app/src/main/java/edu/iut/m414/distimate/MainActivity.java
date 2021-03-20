@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements CountryAdapterLis
         builder.setNegativeButton(R.string.cancel,null);
         builder.setPositiveButton(R.string.confirm, (dialog, which) -> {
             Intent intent = new Intent(this, GameActivity.class);
-            intent.putExtra(DataManager.COUNTRY, position);
+            intent.putExtra(DataManager.KEY_COUNTRY, position);
             startActivity(intent);
             VibrationManager.vibrate(this);
             finish();

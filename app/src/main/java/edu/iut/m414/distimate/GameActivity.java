@@ -22,9 +22,11 @@ import edu.iut.m414.distimate.util.DistanceGuessListener;
 import edu.iut.m414.distimate.util.GameLoadingStateListener;
 import edu.iut.m414.distimate.util.GameStartListener;
 import edu.iut.m414.distimate.util.TimeUpListener;
+import edu.iut.m414.distimate.util.Utilities;
 import edu.iut.m414.distimate.util.VibrationManager;
 
 public class GameActivity extends AppCompatActivity implements GameStartListener, DistanceGuessListener, TimeUpListener {
+    private static final String TAG = GameActivity.class.getSimpleName();
     private GameLoadingStateListener gameLoadingStateListener;
     private PlayerInputFragment playerInputFragment;
     private GameDataFragment gameDataFragment;
@@ -37,7 +39,7 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
 
         Intent intent = getIntent();
         if (intent != null) {
-            int countryIndex = intent.getIntExtra(DataManager.COUNTRY, 0);
+            int countryIndex = intent.getIntExtra(DataManager.KEY_COUNTRY, 0);
             Country selectedCountry = CountryList.get(countryIndex);
             loadGameDataFragment(getString(selectedCountry.getNameId()));
             loadGameSetupFragment();
@@ -48,7 +50,7 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
 
     private void loadGameDataFragment(String countryName) {
         if (gameDataFragment == null) {
-            gameDataFragment = GameDataFragment.newInstance(countryName, Game.DURATION);
+            gameDataFragment = GameDataFragment.newInstance(countryName, DataManager.DURATION);
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.gameDataFrame, gameDataFragment)
@@ -83,22 +85,22 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
     }
 
     private void playNextQuestion() {
-        new GetNextQuestionTask().execute(Game.ANSWER_WAIT_TIME);
+        new GetNextQuestionTask().execute();
     }
 
-    private void slideOutCenterFrameThenExecute(Runnable onSlideOutEnd) {
-        Animation slideOutAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_out);
-        centerFrame.startAnimation(slideOutAnimation);
-        slideOutAnimation.setAnimationListener(new AnimationEndListener() {
+    private void animateCenterFrameThenExecute(Animation animation, Runnable onAnimationEnd) {
+        centerFrame.startAnimation(animation);
+        animation.setAnimationListener(new AnimationEndListener() {
             @Override
             public void onAnimationEnd(Animation animation) {
-                onSlideOutEnd.run();
+                onAnimationEnd.run();
             }
         });
     }
 
     private void loadNextDistanceQuestionFragment(DistanceQuestion question) {
-        slideOutCenterFrameThenExecute(() -> loadDistanceQuestionFragment(question));
+        Animation slideOutAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_out);
+        animateCenterFrameThenExecute(slideOutAnimation, () -> loadDistanceQuestionFragment(question));
     }
 
     private void loadDistanceQuestionFragment(DistanceQuestion question) {
@@ -114,29 +116,41 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
     }
 
     private void loadDistanceAnswerFragment(long realDistance) {
-        slideOutCenterFrameThenExecute(() -> {
-            DistanceAnswerFragment distanceAnswerFragment =
-                    DistanceAnswerFragment.newInstance(realDistance, -1, false);
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.centerFrame, distanceAnswerFragment)
-                    .commit();
-            Animation slideInAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_in);
-            centerFrame.startAnimation(slideInAnimation);
-        });
+        Animation slideOutAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_out);
+        animateCenterFrameThenExecute(slideOutAnimation,
+                () -> {
+                    DistanceAnswerFragment distanceAnswerFragment =
+                            DistanceAnswerFragment.newInstance(realDistance, -1, false);
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.centerFrame, distanceAnswerFragment)
+                            .commit();
+
+                    Animation slideInAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_in);
+                    animateCenterFrameThenExecute(slideInAnimation, () -> {
+                        Utilities.waitDelay(DataManager.ANSWER_WAIT_TIME, TAG);
+                        playNextQuestion();
+                    });
+                });
     }
 
     private void loadDistanceAnswerAndGuessFragment(long realDistance, long guessedDistance) {
-        slideOutCenterFrameThenExecute(() -> {
-            DistanceAnswerFragment distanceAnswerFragment =
-                    DistanceAnswerFragment.newInstance(realDistance, guessedDistance, true);
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.centerFrame, distanceAnswerFragment)
-                    .commit();
-            Animation slideInAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_in);
-            centerFrame.startAnimation(slideInAnimation);
-        });
+        Animation slideOutAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_out);
+        animateCenterFrameThenExecute(slideOutAnimation,
+                () -> {
+                    DistanceAnswerFragment distanceAnswerFragment =
+                            DistanceAnswerFragment.newInstance(realDistance, guessedDistance, true);
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.centerFrame, distanceAnswerFragment)
+                            .commit();
+
+                    Animation slideInAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_in);
+                    animateCenterFrameThenExecute(slideInAnimation, () -> {
+                        Utilities.waitDelay(DataManager.ANSWER_WAIT_TIME, TAG);
+                        playNextQuestion();
+                    });
+                });
     }
 
     @Override
@@ -155,16 +169,14 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
         gameDataFragment.updateScore(Game.getCurrentScore());
         DistanceQuestion currentQuestion = Game.getCurrentQuestion();
         loadDistanceAnswerAndGuessFragment(currentQuestion.getRealDistance(), guess);
-        playNextQuestion();
     }
 
     @Override
     public void onSkip() {
         playerInputFragment.setInputEnabled(false);
         VibrationManager.vibrate(this, 150);
-        gameDataFragment.decreaseTimer(Game.PENALTY_DURATION);
+        gameDataFragment.decreaseTimer(DataManager.PENALTY_DURATION);
         loadDistanceAnswerFragment(Game.getCurrentQuestion().getRealDistance());
-        playNextQuestion();
     }
 
     @Override
@@ -175,8 +187,9 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
     @Override
     public void onTimeUp() {
         playerInputFragment.setInputEnabled(false);
+        Game.notifyStopLoading();
         Intent intent = new Intent(this, GameResultActivity.class);
-        intent.putExtra(DataManager.SCORE, Game.getCurrentScore());
+        intent.putExtra(DataManager.KEY_SCORE, Game.getCurrentScore());
         startActivity(intent);
         finish();
     }
@@ -207,19 +220,11 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
         }
     }
 
-    private class GetNextQuestionTask extends AsyncTask<Long,Void,Void> {
+    private class GetNextQuestionTask extends AsyncTask<Void,Void,Void> {
         private String TAG = GetNextQuestionTask.class.getSimpleName();
 
         @Override
-        protected Void doInBackground(Long... longs) {
-            if (longs.length > 0) {
-                try {
-                    Thread.sleep(longs[0]);
-                } catch (InterruptedException e) {
-                    return null;
-                }
-            }
-
+        protected Void doInBackground(Void... voids) {
             getNextQuestion();
             return null;
         }
@@ -230,11 +235,7 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
                 loadNextDistanceQuestionFragment(nextQuestion);
                 runOnUiThread(() -> playerInputFragment.setInputEnabled(true));
             } else if (!Game.allQuestionsHaveLoaded()) {
-                try {
-                    Thread.sleep(250);
-                } catch (InterruptedException e) {
-                    Log.e(TAG, e.getMessage());
-                }
+                Utilities.waitDelay(250, TAG);
                 getNextQuestion();
             } else {
                 // TODO : gérer le fait qu'il n'y ait plus du tout de questions

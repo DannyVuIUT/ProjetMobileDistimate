@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import edu.iut.m414.distimate.util.DataManager;
+import edu.iut.m414.distimate.util.Utilities;
 
 public class GameResultActivity extends AppCompatActivity {
     @Override
@@ -17,9 +18,9 @@ public class GameResultActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null) {
-            int score = intent.getIntExtra(DataManager.SCORE, 0);
+            int score = intent.getIntExtra(DataManager.KEY_SCORE, 0);
             TextView scoreTextView = findViewById(R.id.finalScoreText);
-            scoreTextView.setText(DataManager.formatNumber(score, this));
+            scoreTextView.setText(Utilities.formatNumber(score, this));
         }
 
         Button backButton = findViewById(R.id.backButton);
