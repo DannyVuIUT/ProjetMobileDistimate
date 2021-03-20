@@ -78,7 +78,7 @@ public class Game {
                 Log.d(TAG, String.format("%s -> %s : %d",
                         questionList.get(i).getFrom(),
                         questionList.get(i).getTo(),
-                        questionList.get(i).getRealDistance()));
+                        questionList.get(i).getActualDistance()));
             }
         });
         initThread.setDaemon(true);
@@ -123,7 +123,7 @@ public class Game {
 
     private static int computeScore(int distanceGuess) {
         DistanceQuestion currentQuestion = questionList.get(currentQuestionIndex);
-        int difference = Math.abs(currentQuestion.getRealDistance() - distanceGuess);
+        int difference = Math.abs(currentQuestion.getActualDistance() - distanceGuess);
         int score = (int) ((((0. + currentCountry.getBaseDistance() - difference)) / currentCountry.getBaseDistance()) * DataManager.MAX_BASE_SCORE);
         return Math.max(0, score);
     }

@@ -3,12 +3,12 @@ package edu.iut.m414.distimate.data;
 public class DistanceQuestion {
     private final String from;
     private final String to;
-    private final int realDistance;
+    private final int actualDistance;
 
-    public DistanceQuestion(String from, String to, int realDistance) {
+    public DistanceQuestion(String from, String to, int actualDistance) {
         this.from = from;
         this.to = to;
-        this.realDistance = realDistance;
+        this.actualDistance = actualDistance;
     }
 
     public String getFrom() {
@@ -19,7 +19,7 @@ public class DistanceQuestion {
         return to;
     }
 
-    public int getRealDistance() {
-        return realDistance;
+    public int getActualDistance() {
+        return actualDistance;
     }
 }
