@@ -9,9 +9,6 @@ public abstract class AnimationEndListener implements Animation.AnimationListene
     }
 
     @Override
-    public abstract void onAnimationEnd(Animation animation);
-
-    @Override
     public void onAnimationRepeat(Animation animation) {
         // Inutilisé
     }
