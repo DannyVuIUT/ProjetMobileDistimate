@@ -241,8 +241,15 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
             if (nextQuestion != null) {
                 loadNextDistanceQuestionFragment(nextQuestion);
             } else if (!Game.allQuestionsHaveLoaded()) {
-                Utilities.waitDelay(250, TAG);
-                getNextQuestion();
+                if (Game.requestAreWorking()) {
+                    Utilities.waitDelay(250, TAG);
+                    getNextQuestion();
+                } else {
+                    Toast.makeText(
+                            GameActivity.this,
+                            getString(R.string.question_retrieval_failed),
+                            Toast.LENGTH_LONG).show();
+                }
             } else {
                 Toast.makeText(
                         GameActivity.this,

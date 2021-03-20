@@ -20,11 +20,11 @@ public class Game {
     private static int currentScore;
     private static int currentQuestionIndex;
     private static final List<DistanceQuestion> questionList;
-    private static final boolean[] continueLoading;
+    private static boolean continueLoading;
+    private static boolean requestsWorking;
 
     static {
         questionList = Collections.synchronizedList(new ArrayList<>());
-        continueLoading = new boolean[]{false};
     }
 
     private Game() {
@@ -40,10 +40,11 @@ public class Game {
             questionList.clear();
         }
 
-        continueLoading[0] = true;
+        continueLoading = true;
+        requestsWorking = true;
         Thread initThread = new Thread(() -> {
             long currentTime = SystemClock.elapsedRealtime();
-            for (int i = 0; i < DataManager.MAX_GAME_SIZE && continueLoading[0]; i++) {
+            for (int i = 0; i < DataManager.MAX_GAME_SIZE && continueLoading; i++) {
                 int firstCityNumber = RNG.nextInt(country.getCitiesCount());
                 int secondCityNumber;
                 do {
@@ -54,14 +55,20 @@ public class Game {
                 City firstCity = GeoDB.requestCity(country.getId(), firstCityNumber, languageCode);
                 Log.d(TAG, "GOT FIRST CITY AFTER : " + (SystemClock.elapsedRealtime() - otherTime) + "ms");
 
-                if (!continueLoading[0])
+                if (!continueLoading)
                     break;
 
                 City secondCity = GeoDB.requestCity(country.getId(), secondCityNumber, languageCode);
                 Log.d(TAG, "GOT SECOND CITY AFTER : " + (SystemClock.elapsedRealtime() - otherTime) + "ms");
 
-                if (!continueLoading[0])
+                if (!continueLoading)
                     break;
+
+                if (firstCity == null || secondCity == null) {
+                    requestsWorking = false;
+                    break;
+                }
+
 
                 int distance = GeoDB.requestDistance(firstCity.getId(), secondCity.getId());
                 Log.d(TAG, "GOT DISTANCE AFTER : " + (SystemClock.elapsedRealtime() - otherTime) + "ms");
@@ -139,6 +146,10 @@ public class Game {
     }
 
     public static void notifyStopLoading() {
-        continueLoading[0] = false;
+        continueLoading = false;
+    }
+
+    public static boolean requestAreWorking() {
+        return requestsWorking;
     }
 }
