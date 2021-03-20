@@ -158,7 +158,15 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
         loadPlayerInputFragment();
 
         DistanceQuestion nextQuestion = Game.nextQuestion();
-        loadDistanceQuestionFragment(nextQuestion);
+        if (nextQuestion == null) {
+            Toast.makeText(
+                    GameActivity.this,
+                    getString(R.string.question_retrieval_failed),
+                    Toast.LENGTH_LONG).show();
+            finish();
+        } else {
+            loadDistanceQuestionFragment(nextQuestion);
+        }
     }
 
     @Override
