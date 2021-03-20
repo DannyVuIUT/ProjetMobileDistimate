@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -53,7 +52,7 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
 
     private void loadGameDataFragment(String countryName) {
         if (gameDataFragment == null) {
-            gameDataFragment = GameDataFragment.newInstance(countryName, DataManager.DURATION);
+            gameDataFragment = GameDataFragment.newInstance(countryName, DataManager.GAME_DURATION);
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.gameDataFrame, gameDataFragment)
@@ -149,7 +148,7 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
 
                     Animation slideInAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_in);
                     animateCenterFrameThenExecute(slideInAnimation, () -> {
-                        playNextQuestion(DataManager.ANSWER_WAIT_TIME);
+                        playNextQuestion(DataManager.ANSWER_AND_GUESS_WAIT_TIME);
                     });
                 });
     }

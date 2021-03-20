@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +13,13 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
+import edu.iut.m414.distimate.util.AnimationEndListener;
 import edu.iut.m414.distimate.util.GameLoadingStateListener;
 import edu.iut.m414.distimate.util.GameStartListener;
 
 public class GameSetupFragment extends Fragment implements GameLoadingStateListener {
-    GameStartListener startListener;
-    Button startButton;
+    private GameStartListener startListener;
+    private Button startButton;
 
     public GameSetupFragment() {
         // Required empty public constructor
@@ -31,22 +31,12 @@ public class GameSetupFragment extends Fragment implements GameLoadingStateListe
         View rootView = inflater.inflate(R.layout.fragment_game_setup, container, false);
 
         startButton = rootView.findViewById(R.id.startButton);
-        startButton.setOnClickListener((view) -> {
+        startButton.setOnClickListener(v -> {
                     Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.zoom_fade);
-                    animation.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
-
-                        }
-
+                    animation.setAnimationListener(new AnimationEndListener() {
                         @Override
                         public void onAnimationEnd(Animation animation) {
                             startListener.onGameStart();
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-
                         }
                     });
                     startButton.startAnimation(animation);
