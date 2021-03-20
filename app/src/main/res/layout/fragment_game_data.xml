@@ -83,6 +83,7 @@
             android:countDown="true"
             android:textSize="50sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textColor="@color/timer_color"/>
     </LinearLayout>
 </LinearLayout>
