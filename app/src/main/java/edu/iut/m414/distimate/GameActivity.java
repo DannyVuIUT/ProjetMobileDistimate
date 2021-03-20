@@ -173,6 +173,8 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
     @Override
     public void onSkip() {
         playerInputFragment.setInputEnabled(false);
+        Game.updateScoreSkip();
+        gameDataFragment.updateScore(Game.getCurrentScore());
         VibrationManager.vibrate(this, 150);
         gameDataFragment.decreaseTimer(DataManager.PENALTY_DURATION);
         loadDistanceAnswerFragment(Game.getCurrentQuestion().getRealDistance());

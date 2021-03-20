@@ -21,9 +21,10 @@ public class Game {
     private static int currentQuestionIndex;
     private static final List<DistanceQuestion> questionList;
     private static final boolean[] continueLoading;
+
     static {
         questionList = Collections.synchronizedList(new ArrayList<>());
-        continueLoading = new boolean[] {false};
+        continueLoading = new boolean[]{false};
     }
 
     private Game() {
@@ -111,15 +112,20 @@ public class Game {
         return questionList.subList(0, currentQuestionIndex + 1).toArray(new DistanceQuestion[0]);
     }
 
-    public static int updateScore(int distanceGuess) {
+    public static void updateScore(int distanceGuess) {
         int guessScore = computeScore(distanceGuess);
         currentScore += guessScore;
-        return guessScore;
+    }
+
+    public static void updateScoreSkip() {
+        currentScore += DataManager.SKIP_SCORE;
     }
 
     private static int computeScore(int distanceGuess) {
         DistanceQuestion currentQuestion = questionList.get(currentQuestionIndex);
-        return Math.abs(currentQuestion.getRealDistance() - distanceGuess);
+        int difference = Math.abs(currentQuestion.getRealDistance() - distanceGuess);
+        int score = (int) ((((0. + currentCountry.getBaseDistance() - difference)) / currentCountry.getBaseDistance()) * DataManager.MAX_BASE_SCORE);
+        return Math.max(0, score);
     }
 
     public static boolean allQuestionsHaveLoaded() {
