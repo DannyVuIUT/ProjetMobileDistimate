@@ -1,5 +1,7 @@
 package edu.iut.m414.distimate;
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -91,5 +93,8 @@ public class GameDataFragment extends Fragment {
         gameTimer.setBase(
                 Math.max(gameTimer.getBase() - (duration * 1000),
                         SystemClock.elapsedRealtime()));
+        AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(),R.animator.error_shake);
+        set.setTarget(gameTimer);
+        set.start();
     }
 }

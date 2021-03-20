@@ -6,9 +6,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
 import edu.iut.m414.distimate.util.GameLoadingStateListener;
@@ -29,14 +32,31 @@ public class GameSetupFragment extends Fragment implements GameLoadingStateListe
 
         startButton = rootView.findViewById(R.id.startButton);
         startButton.setOnClickListener((view) -> {
-            startListener.onGameStart();
-        });
+                    Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.zoom_fade);
+                    animation.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            startListener.onGameStart();
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                    startButton.startAnimation(animation);
+                });
         startButton.setClickable(false);
         return rootView;
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.startListener = (GameStartListener) getActivity();
     }
