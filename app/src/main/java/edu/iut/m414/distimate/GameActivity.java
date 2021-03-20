@@ -159,10 +159,18 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
 
         DistanceQuestion nextQuestion = Game.nextQuestion();
         if (nextQuestion == null) {
+            View currentFocus = getCurrentFocus();
+            if (currentFocus != null) {
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
+            }
+
             Toast.makeText(
                     GameActivity.this,
                     getString(R.string.question_retrieval_failed),
                     Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
             finish();
         } else {
             loadDistanceQuestionFragment(nextQuestion);
@@ -196,9 +204,9 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
     @Override
     public void onTimeUp() {
         Game.notifyStopLoading();
-        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         View currentFocus = getCurrentFocus();
         if (currentFocus != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
         }
         Intent intent = new Intent(this, GameResultActivity.class);
