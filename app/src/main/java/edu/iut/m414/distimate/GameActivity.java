@@ -155,16 +155,9 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
     @Override
     public void onGameStart() {
         gameDataFragment.startTimer();
-        loadPlayerInputFragment();
 
         DistanceQuestion nextQuestion = Game.nextQuestion();
         if (nextQuestion == null) {
-            View currentFocus = getCurrentFocus();
-            if (currentFocus != null) {
-                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
-            }
-
             Toast.makeText(
                     GameActivity.this,
                     getString(R.string.question_retrieval_failed),
@@ -173,6 +166,7 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
             startActivity(intent);
             finish();
         } else {
+            loadPlayerInputFragment();
             loadDistanceQuestionFragment(nextQuestion);
         }
     }
