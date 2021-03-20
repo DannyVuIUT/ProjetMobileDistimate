@@ -23,18 +23,18 @@
         android:orientation="horizontal"
         android:layout_marginHorizontal="10dp">
         <Button
-            style="?android:attr/borderlessButtonStyle"
             android:id="@+id/distanceGuessConfirmButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/confirm"/>
+            android:text="@string/confirm"
+            tools:ignore="ButtonStyle" />
         <Button
-            style="?android:attr/borderlessButtonStyle"
             android:id="@+id/distanceGuessSkipButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="@string/skip"/>
+            android:text="@string/skip"
+            tools:ignore="ButtonStyle"/>
     </LinearLayout>
 </LinearLayout>
