@@ -27,5 +27,5 @@
     <string name="final_score_prefix">"Score final : "</string>
     <string name="actual_distance_between_cities">Distance réelle entre les villes</string>
     <string name="game_summary">Résumé de la partie</string>
-    <string name="distance_between_two_cities">Distance entre %s%net %s%n%s km</string>
+    <string name="distance_between_two_cities">Distance entre %s%net %s :%n%s km</string>
 </resources>
