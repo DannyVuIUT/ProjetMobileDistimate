@@ -37,7 +37,7 @@ public class GameResultActivity extends AppCompatActivity {
                         getString(R.string.distance_between_two_cities),
                         dq.getFrom(),
                         dq.getTo(),
-                        Utilities.formatNumber(dq.getRealDistance(), this)))
+                        Utilities.formatNumber(dq.getActualDistance(), this)))
                 .collect(Collectors.toList());
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(

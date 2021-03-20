@@ -21,7 +21,7 @@
     <string name="loading_questions">Loading questions….</string>
     <string name="game_locale">en</string>
     <string name="start">Start</string>
-    <string name="real_distance_prefix">The distance was</string>
+    <string name="actual_distance_prefix">The distance was</string>
     <string name="distance_guess_prefix">you guessed</string>
     <string name="no_question_left">There is no question left.</string>
     <string name="final_score_prefix">"Final score: "</string>

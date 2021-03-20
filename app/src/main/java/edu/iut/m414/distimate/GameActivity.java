@@ -167,7 +167,7 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
         Game.updateScore(guess);
         gameDataFragment.updateScore(Game.getCurrentScore());
         DistanceQuestion currentQuestion = Game.getCurrentQuestion();
-        loadDistanceAnswerAndGuessFragment(currentQuestion.getRealDistance(), guess);
+        loadDistanceAnswerAndGuessFragment(currentQuestion.getActualDistance(), guess);
     }
 
     @Override
@@ -175,7 +175,7 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
         playerInputFragment.setInputEnabled(false);
         VibrationManager.vibrate(this, 150);
         gameDataFragment.decreaseTimer(DataManager.PENALTY_DURATION);
-        loadDistanceAnswerFragment(Game.getCurrentQuestion().getRealDistance());
+        loadDistanceAnswerFragment(Game.getCurrentQuestion().getActualDistance());
     }
 
     @Override

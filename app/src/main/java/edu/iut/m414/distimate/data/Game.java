@@ -77,7 +77,7 @@ public class Game {
                 Log.d(TAG, String.format("%s -> %s : %d",
                         questionList.get(i).getFrom(),
                         questionList.get(i).getTo(),
-                        questionList.get(i).getRealDistance()));
+                        questionList.get(i).getActualDistance()));
             }
         });
         initThread.setDaemon(true);
@@ -119,7 +119,7 @@ public class Game {
 
     private static int computeScore(int distanceGuess) {
         DistanceQuestion currentQuestion = questionList.get(currentQuestionIndex);
-        return Math.abs(currentQuestion.getRealDistance() - distanceGuess);
+        return Math.abs(currentQuestion.getActualDistance() - distanceGuess);
     }
 
     public static boolean allQuestionsHaveLoaded() {
