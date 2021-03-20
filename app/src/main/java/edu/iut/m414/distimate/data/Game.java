@@ -42,6 +42,8 @@ public class Game {
 
         continueLoading = true;
         requestsWorking = true;
+
+        Thread currentThread = Thread.currentThread();
         Thread initThread = new Thread(() -> {
             long currentTime = SystemClock.elapsedRealtime();
             for (int i = 0; i < DataManager.MAX_GAME_SIZE && continueLoading; i++) {
@@ -66,6 +68,7 @@ public class Game {
 
                 if (firstCity == null || secondCity == null) {
                     requestsWorking = false;
+                    currentThread.interrupt();
                     break;
                 }
 
@@ -91,7 +94,11 @@ public class Game {
         initThread.setDaemon(true);
         initThread.start();
 
-        Utilities.waitDelay(DataManager.INIT_WAIT_TIME, TAG);
+        try {
+            Thread.sleep(DataManager.INIT_WAIT_TIME);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     public static DistanceQuestion nextQuestion() {
