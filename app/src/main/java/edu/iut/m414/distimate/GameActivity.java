@@ -154,8 +154,6 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
 
     @Override
     public void onGameStart() {
-        gameDataFragment.startTimer();
-
         DistanceQuestion nextQuestion = Game.nextQuestion();
         if (nextQuestion == null) {
             Toast.makeText(
@@ -166,6 +164,7 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
             startActivity(intent);
             finish();
         } else {
+            gameDataFragment.startTimer();
             loadPlayerInputFragment();
             loadDistanceQuestionFragment(nextQuestion);
         }
@@ -232,7 +231,11 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
             super.onPostExecute(result);
             if (progressDialog.isShowing())
                 progressDialog.dismiss();
-            gameLoadingStateListener.onGameLoaded();
+            if (Game.requestAreWorking()) {
+                gameLoadingStateListener.onGameLoaded();
+            } else {
+                onGameStart();
+            }
         }
     }
 
