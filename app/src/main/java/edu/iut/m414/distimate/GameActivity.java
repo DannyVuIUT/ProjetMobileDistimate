@@ -87,8 +87,8 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
         }
     }
 
-    private void playNextQuestion() {
-        new GetNextQuestionTask().execute();
+    private void playNextQuestion(long delay) {
+        new GetNextQuestionTask().execute(delay);
     }
 
     private void animateCenterFrameThenExecute(Animation animation, Runnable onAnimationEnd) {
@@ -131,8 +131,7 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
 
                     Animation slideInAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_in);
                     animateCenterFrameThenExecute(slideInAnimation, () -> {
-                        Utilities.waitDelay(DataManager.ANSWER_WAIT_TIME, TAG);
-                        playNextQuestion();
+                        playNextQuestion(DataManager.ANSWER_WAIT_TIME);
                     });
                 });
     }
@@ -150,8 +149,7 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
 
                     Animation slideInAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_in);
                     animateCenterFrameThenExecute(slideInAnimation, () -> {
-                        Utilities.waitDelay(DataManager.ANSWER_WAIT_TIME, TAG);
-                        playNextQuestion();
+                        playNextQuestion(DataManager.ANSWER_WAIT_TIME);
                     });
                 });
     }
@@ -228,11 +226,12 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
         }
     }
 
-    private class GetNextQuestionTask extends AsyncTask<Void, Void, Void> {
-        private String TAG = GetNextQuestionTask.class.getSimpleName();
+    private class GetNextQuestionTask extends AsyncTask<Long, Void, Void> {
+        private final String TAG = GetNextQuestionTask.class.getSimpleName();
 
         @Override
-        protected Void doInBackground(Void... voids) {
+        protected Void doInBackground(Long... longs) {
+            Utilities.waitDelay(longs[0], TAG);
             getNextQuestion();
             return null;
         }
