@@ -24,4 +24,8 @@
     <string name="real_distance_prefix">La distance était</string>
     <string name="distance_guess_prefix">vous aviez deviné</string>
     <string name="no_question_left">Il n\'y a plus de question.</string>
+    <string name="final_score_prefix">"Score final : "</string>
+    <string name="actual_distance_between_cities">Distance réelle entre les villes</string>
+    <string name="game_summary">Résumé de la partie</string>
+    <string name="distance_between_two_cities">Distance between %s and %s : %s km</string>
 </resources>

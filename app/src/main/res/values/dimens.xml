@@ -2,4 +2,6 @@
 <resources>
     <dimen name="country_element_height">90dp</dimen>
     <dimen name="distance_question_answer_height">175dp</dimen>
+    <dimen name="final_score_text_size">25sp</dimen>
+    <dimen name="top_game_data_text_size">16sp</dimen>
 </resources>

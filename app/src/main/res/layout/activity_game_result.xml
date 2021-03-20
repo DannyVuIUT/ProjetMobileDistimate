@@ -1,25 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:layout_centerVertical="true">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/score_prefix"
-        android:textSize="40sp"
-        />
+    android:gravity="center">
 
     <TextView
-        android:id="@+id/finalScoreText"
-        android:layout_width="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="45sp"
-        />
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textAlignment="gravity"
+        android:text="@string/game_summary"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/final_score_prefix"
+            android:textSize="@dimen/final_score_text_size"/>
+        <TextView
+            android:id="@+id/finalScoreText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/final_score_text_size"
+            android:text="1 000 000"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textAlignment="gravity"
+        android:layout_margin="10dp"
+        android:text="@string/actual_distance_between_cities"/>
+
+    <ListView
+        android:id="@+id/shownQuestionsList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
     <Button
-        android:layout_marginTop="30dp"
+        android:layout_margin="30dp"
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
