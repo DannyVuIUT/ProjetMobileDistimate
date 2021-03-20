@@ -9,7 +9,7 @@
         android:layout_margin="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:textStyle="bold"
         android:gravity="center"
         android:textAlignment="gravity"
@@ -29,8 +29,7 @@
             android:id="@+id/finalScoreText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/final_score_text_size"
-            android:text="1 000 000"/>
+            android:textSize="@dimen/final_score_text_size" />
     </LinearLayout>
 
     <TextView
