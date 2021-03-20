@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="country_element_height">90dp</dimen>
+    <dimen name="distance_question_answer_height">175dp</dimen>
 </resources>

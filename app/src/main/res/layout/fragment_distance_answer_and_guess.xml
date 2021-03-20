@@ -10,7 +10,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="25dp"
         android:autoSizeTextType="uniform"
         android:gravity="bottom|center_horizontal"
         android:textAlignment="gravity"
@@ -23,10 +23,23 @@
         <TextView
             android:id="@+id/realDistanceText"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            android:textAlignment="gravity"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            android:textAlignment="gravity"
+            android:text="vous aviez deviné"/>
+        <TextView
+            android:id="@+id/guessedDistanceText"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
             android:autoSizeTextType="uniform"
             android:gravity="center"
             android:textAlignment="gravity"/>
     </LinearLayout>
-
 </LinearLayout>

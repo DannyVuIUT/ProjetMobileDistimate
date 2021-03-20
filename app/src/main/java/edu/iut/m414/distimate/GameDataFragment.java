@@ -68,7 +68,7 @@ public class GameDataFragment extends Fragment {
 
     private void initializeTimer(long duration) {
         gameTimer.stop();
-        gameTimer.setBase(SystemClock.elapsedRealtime() + (duration * 1000) + 500);
+        gameTimer.setBase(SystemClock.elapsedRealtime() + duration + 500);
         started = false;
 
         gameTimer.setOnChronometerTickListener(chronometer -> {
@@ -91,8 +91,8 @@ public class GameDataFragment extends Fragment {
 
     public void decreaseTimer(long duration) {
         gameTimer.setBase(
-                Math.max(gameTimer.getBase() - (duration * 1000),
-                        SystemClock.elapsedRealtime()));
+                Math.max(gameTimer.getBase() - duration, SystemClock.elapsedRealtime()));
+
         AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(),R.animator.error_shake);
         set.setTarget(gameTimer);
         set.start();
