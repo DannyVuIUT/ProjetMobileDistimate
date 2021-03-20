@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import edu.iut.m414.distimate.util.DataManager;
 import edu.iut.m414.distimate.util.Utilities;
+import edu.iut.m414.distimate.util.VibrationManager;
 
 public class GameResultActivity extends AppCompatActivity {
     @Override
@@ -25,6 +26,8 @@ public class GameResultActivity extends AppCompatActivity {
 
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener((view) -> returnToMenu());
+
+        VibrationManager.vibrate(this, 1000);
     }
 
     public void returnToMenu() {
