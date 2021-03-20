@@ -10,6 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -241,7 +242,10 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
                 Utilities.waitDelay(250, TAG);
                 getNextQuestion();
             } else {
-                // TODO : gérer le fait qu'il n'y ait plus du tout de questions
+                Toast.makeText(
+                        GameActivity.this,
+                        getString(R.string.no_question_left),
+                        Toast.LENGTH_LONG).show();
             }
         }
     }

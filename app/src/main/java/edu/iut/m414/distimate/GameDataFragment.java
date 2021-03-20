@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
-import edu.iut.m414.distimate.util.DataManager;
 import edu.iut.m414.distimate.util.TimeUpListener;
 import edu.iut.m414.distimate.util.Utilities;
 

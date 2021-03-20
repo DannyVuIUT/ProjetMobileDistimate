@@ -6,7 +6,7 @@ import android.util.Log;
 import java.text.NumberFormat;
 
 public class Utilities {
-    public static String formatNumber(int number, Context context) {
+    public static String formatNumber(long number, Context context) {
         return NumberFormat.getNumberInstance(context.getResources().getConfiguration().getLocales().get(0)).format(number);
     }
 

@@ -2,12 +2,16 @@ package edu.iut.m414.distimate;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import edu.iut.m414.distimate.util.Utilities;
 
 public class DistanceAnswerFragment extends Fragment {
     private static final String ARG_REAL_DISTANCE = "realDistance";
@@ -38,7 +42,7 @@ public class DistanceAnswerFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView;
         if (hasGuess) {
@@ -48,13 +52,18 @@ public class DistanceAnswerFragment extends Fragment {
         }
 
         TextView realDistanceText = rootView.findViewById(R.id.realDistanceText);
+
         if (getArguments() != null)
-            realDistanceText.setText(getArguments().getLong(ARG_REAL_DISTANCE) + " km");
+            realDistanceText.setText(String.format(
+                    getString(R.string.distance),
+                    Utilities.formatNumber(getArguments().getLong(ARG_REAL_DISTANCE), getContext())));
 
         if (hasGuess) {
             TextView guessedDistanceText = rootView.findViewById(R.id.guessedDistanceText);
             if (getArguments() != null)
-                guessedDistanceText.setText(getArguments().getLong(ARG_GUESSED_DISTANCE) + " km");
+                guessedDistanceText.setText(String.format(
+                        getString(R.string.distance),
+                        Utilities.formatNumber(getArguments().getLong(ARG_GUESSED_DISTANCE), getContext())));
         }
 
         return rootView;

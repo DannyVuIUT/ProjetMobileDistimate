@@ -14,7 +14,8 @@
         android:inputType="number"
         android:maxLength="5"
         android:layout_marginHorizontal="10dp"
-        android:hint="@string/enter_your_guess" />
+        android:hint="@string/enter_your_guess"
+        android:importantForAutofill="no" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,16 +23,18 @@
         android:orientation="horizontal"
         android:layout_marginHorizontal="10dp">
         <Button
+            style="?android:attr/borderlessButtonStyle"
             android:id="@+id/distanceGuessConfirmButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/confirm"/>
         <Button
+            style="?android:attr/borderlessButtonStyle"
             android:id="@+id/distanceGuessSkipButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:text="@string/skip"/>
     </LinearLayout>
 </LinearLayout>

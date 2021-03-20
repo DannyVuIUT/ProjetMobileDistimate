@@ -40,7 +40,6 @@ public class CountryAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-
         return position;
     }
 
@@ -65,14 +64,15 @@ public class CountryAdapter extends BaseAdapter {
         countryFlag.setImageResource(currentCountry.getFlag());
         countryImage.setImageResource(currentCountry.getImage());
         countryName.setText(context.getString(currentCountry.getNameId()));
+
         Context context = layoutItem.getContext();
         countryArea.setText(String.format(context.getString(R.string.area), Utilities.formatNumber(currentCountry.getArea(), context)));
         countryCities.setText(String.format(layoutItem.getContext().getString(R.string.cities), Utilities.formatNumber(currentCountry.getCitiesCount(), context)));
 
         layoutItem.setTag(position);
 
-        layoutItem.setOnClickListener((view) -> {
-            int itemPosition = (Integer) view.getTag();
+        layoutItem.setOnClickListener(v -> {
+            int itemPosition = (Integer) v.getTag();
             sendListener(itemPosition);
         });
 

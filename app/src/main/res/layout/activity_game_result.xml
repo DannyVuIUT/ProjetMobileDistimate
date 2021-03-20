@@ -8,14 +8,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/score_prefix"
-        android:textSize="40dp"
+        android:textSize="40sp"
         />
 
     <TextView
         android:id="@+id/finalScoreText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="45dp"
+        android:textSize="45sp"
         />
 
     <Button
