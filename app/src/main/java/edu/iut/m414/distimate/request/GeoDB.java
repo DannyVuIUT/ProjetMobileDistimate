@@ -20,7 +20,7 @@ public final class GeoDB {
 
         try {
             String request = String.format(
-                    MAIN_LINK + "cities?countryIds=%s&languageCode=%s&limit=1&offset=%d",
+                    MAIN_LINK + "cities?countryIds=%s&languageCode=%s&limit=1&offset=%s",
                     countryId,
                     requestLanguage,
                     cityNumber);
@@ -40,7 +40,7 @@ public final class GeoDB {
 
         try {
             String request = String.format(
-                    MAIN_LINK + "cities/%d/distance?fromCityId=%d&distanceUnit=KM",
+                    MAIN_LINK + "cities/%s/distance?fromCityId=%s&distanceUnit=KM",
                     firstCityId,
                     secondCityId);
 
