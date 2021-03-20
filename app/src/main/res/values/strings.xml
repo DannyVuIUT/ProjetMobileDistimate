@@ -14,13 +14,13 @@
     <string name="enter_your_guess">Enter your guess</string>
     <string name="question_prefix">What is the distance between</string>
     <string name="and">and</string>
-    <string name="cities">"Cities: "</string>
-    <string name="area">"Area: "</string>
+    <string name="cities">"Cities: %s"</string>
+    <string name="area">"Area: %s km²"</string>
     <string name="country">Country</string>
     <string name="you_selected">"You selected "</string>
     <string name="cancel">CANCEL</string>
     <string name="back">BACK TO MENU</string>
-    <string name="loading_questions">Loading questions...</string>
+    <string name="loading_questions">Loading questions…</string>
     <string name="game_locale">en</string>
     <string name="start">Start</string>
 </resources>

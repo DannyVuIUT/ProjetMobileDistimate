@@ -1,9 +1,9 @@
 package edu.iut.m414.distimate.data;
 
 public class DistanceQuestion {
-    private String from;
-    private String to;
-    private int realDistance;
+    private final String from;
+    private final String to;
+    private final int realDistance;
 
     public DistanceQuestion(String from, String to, int realDistance) {
         this.from = from;

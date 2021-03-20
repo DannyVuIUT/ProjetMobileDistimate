@@ -15,13 +15,12 @@ import java.util.List;
 
 import edu.iut.m414.distimate.data.Country;
 import edu.iut.m414.distimate.data.CountryList;
-import edu.iut.m414.distimate.util.DataManager;
 import edu.iut.m414.distimate.util.Utilities;
 
 public class CountryAdapter extends BaseAdapter {
-    private Context context;
-    private LayoutInflater inflater;
-    private List<CountryAdapterListener> listeners;
+    private final Context context;
+    private final LayoutInflater inflater;
+    private final List<CountryAdapterListener> listeners;
 
     public CountryAdapter(Context context) {
         this.context = context;
@@ -66,8 +65,9 @@ public class CountryAdapter extends BaseAdapter {
         countryFlag.setImageResource(currentCountry.getFlag());
         countryImage.setImageResource(currentCountry.getImage());
         countryName.setText(context.getString(currentCountry.getNameId()));
-        countryArea.setText(layoutItem.getContext().getString(R.string.area) + Utilities.formatNumber(currentCountry.getArea(), layoutItem.getContext()) + " km²");
-        countryCities.setText(layoutItem.getContext().getString(R.string.cities) + Utilities.formatNumber(currentCountry.getCitiesCount(), layoutItem.getContext()));
+        Context context = layoutItem.getContext();
+        countryArea.setText(String.format(context.getString(R.string.area), Utilities.formatNumber(currentCountry.getArea(), context)));
+        countryCities.setText(String.format(layoutItem.getContext().getString(R.string.cities), Utilities.formatNumber(currentCountry.getCitiesCount(), context)));
 
         layoutItem.setTag(position);
 

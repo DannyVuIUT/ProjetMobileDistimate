@@ -20,11 +20,6 @@ public class CountryList {
         countries = new ArrayList<>();
     }
 
-    public static CountryList getInstance() {
-        createInstance();
-        return instance;
-    }
-
     public static Country get(int position) {
         createInstance();
         return instance.countries.get(position);

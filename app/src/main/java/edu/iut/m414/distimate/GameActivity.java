@@ -28,7 +28,6 @@ import edu.iut.m414.distimate.util.Utilities;
 import edu.iut.m414.distimate.util.VibrationManager;
 
 public class GameActivity extends AppCompatActivity implements GameStartListener, DistanceGuessListener, TimeUpListener {
-    private static final String TAG = GameActivity.class.getSimpleName();
     private GameLoadingStateListener gameLoadingStateListener;
     private PlayerInputFragment playerInputFragment;
     private GameDataFragment gameDataFragment;
@@ -114,7 +113,8 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
                 .commit();
 
         Animation slideInAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_in);
-        centerFrame.startAnimation(slideInAnimation);
+        animateCenterFrameThenExecute(slideInAnimation,
+                () -> playerInputFragment.setInputEnabled(true));
     }
 
     private void loadDistanceAnswerFragment(long realDistance) {
@@ -129,9 +129,8 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
                             .commit();
 
                     Animation slideInAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_in);
-                    animateCenterFrameThenExecute(slideInAnimation, () -> {
-                        playNextQuestion(DataManager.ANSWER_WAIT_TIME);
-                    });
+                    animateCenterFrameThenExecute(slideInAnimation,
+                            () -> playNextQuestion(DataManager.ANSWER_WAIT_TIME));
                 });
     }
 
@@ -147,9 +146,8 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
                             .commit();
 
                     Animation slideInAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_in);
-                    animateCenterFrameThenExecute(slideInAnimation, () -> {
-                        playNextQuestion(DataManager.ANSWER_AND_GUESS_WAIT_TIME);
-                    });
+                    animateCenterFrameThenExecute(slideInAnimation,
+                            () -> playNextQuestion(DataManager.ANSWER_AND_GUESS_WAIT_TIME));
                 });
     }
 
@@ -239,7 +237,6 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
             DistanceQuestion nextQuestion = Game.nextQuestion();
             if (nextQuestion != null) {
                 loadNextDistanceQuestionFragment(nextQuestion);
-                runOnUiThread(() -> playerInputFragment.setInputEnabled(true));
             } else if (!Game.allQuestionsHaveLoaded()) {
                 Utilities.waitDelay(250, TAG);
                 getNextQuestion();
