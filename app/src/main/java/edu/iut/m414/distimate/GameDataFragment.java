@@ -22,7 +22,6 @@ public class GameDataFragment extends Fragment {
 
     private TimeUpListener timeUpListener;
     private Chronometer gameTimer;
-    private TextView currentCountryName;
     private TextView currentScore;
     private long initialDuration;
     private boolean started;
@@ -41,7 +40,7 @@ public class GameDataFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         timeUpListener = (TimeUpListener) getActivity();
     }
@@ -53,7 +52,7 @@ public class GameDataFragment extends Fragment {
 
         gameTimer = rootView.findViewById(R.id.gameTimer);
 
-        currentCountryName = rootView.findViewById(R.id.gameCountryNameText);
+        TextView currentCountryName = rootView.findViewById(R.id.gameCountryNameText);
         currentScore = rootView.findViewById(R.id.gameScoreText);
 
         if (getArguments() != null) {
