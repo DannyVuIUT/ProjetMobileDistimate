@@ -31,6 +31,7 @@
     <string name="final_score_prefix">"Final score: "</string>
     <string name="actual_distance_between_cities">Actual distance between cities</string>
     <string name="game_summary">Game summary</string>
-    <string name="distance_between_two_cities">Distance between %s%nand %s:%n%s km</string>
     <string name="question_retrieval_failed">Could not retrieve the next question. Please check your connection.</string>
+    <string name="from">From:</string>
+    <string name="to">To:</string>
 </resources>

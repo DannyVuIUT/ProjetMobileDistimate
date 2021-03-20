@@ -65,7 +65,6 @@ public class CountryAdapter extends BaseAdapter {
         countryImage.setImageResource(currentCountry.getImage());
         countryName.setText(context.getString(currentCountry.getNameId()));
 
-        Context context = layoutItem.getContext();
         countryArea.setText(String.format(context.getString(R.string.area), Utilities.formatNumber(currentCountry.getArea(), context)));
         countryCities.setText(String.format(layoutItem.getContext().getString(R.string.cities), Utilities.formatNumber(currentCountry.getCitiesCount(), context)));
 
