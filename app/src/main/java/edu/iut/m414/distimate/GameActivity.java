@@ -1,12 +1,15 @@
 package edu.iut.m414.distimate;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -62,7 +65,7 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
         Fragment middleFragment = getSupportFragmentManager().findFragmentById(R.id.centerFrame);
         if (middleFragment == null) {
             middleFragment = new GameSetupFragment();
-            gameLoadingStateListener = (GameLoadingStateListener)middleFragment;
+            gameLoadingStateListener = (GameLoadingStateListener) middleFragment;
 
             getSupportFragmentManager()
                     .beginTransaction()
@@ -72,7 +75,7 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
     }
 
     private void loadPlayerInputFragment() {
-        playerInputFragment = (PlayerInputFragment)getSupportFragmentManager().findFragmentById(R.id.playerInputFrame);
+        playerInputFragment = (PlayerInputFragment) getSupportFragmentManager().findFragmentById(R.id.playerInputFrame);
 
         if (playerInputFragment == null) {
             playerInputFragment = new PlayerInputFragment();
@@ -186,16 +189,21 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
 
     @Override
     public void onTimeUp() {
-        playerInputFragment.setInputEnabled(false);
         Game.notifyStopLoading();
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        View currentFocus = getCurrentFocus();
+        if (currentFocus != null) {
+            inputMethodManager.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
+        }
         Intent intent = new Intent(this, GameResultActivity.class);
         intent.putExtra(DataManager.KEY_SCORE, Game.getCurrentScore());
         startActivity(intent);
         finish();
     }
 
-    private class LoadGameTask extends AsyncTask<Country,Void,Void> {
+    private class LoadGameTask extends AsyncTask<Country, Void, Void> {
         private ProgressDialog progressDialog;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -207,7 +215,7 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
 
         @Override
         protected Void doInBackground(Country... countries) {
-            Game.initializeGameData(countries[0],getString(R.string.game_locale));
+            Game.initializeGameData(countries[0], getString(R.string.game_locale));
             return null;
         }
 
@@ -220,7 +228,7 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
         }
     }
 
-    private class GetNextQuestionTask extends AsyncTask<Void,Void,Void> {
+    private class GetNextQuestionTask extends AsyncTask<Void, Void, Void> {
         private String TAG = GetNextQuestionTask.class.getSimpleName();
 
         @Override
