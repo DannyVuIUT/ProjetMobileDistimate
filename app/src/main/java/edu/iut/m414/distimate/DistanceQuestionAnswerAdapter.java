@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -40,12 +41,12 @@ public class DistanceQuestionAnswerAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ConstraintLayout layoutItem;
+        LinearLayout layoutItem;
 
         if (convertView == null) {
-            layoutItem = (ConstraintLayout) inflater.inflate(R.layout.distance_question_answer_layout, parent, false);
+            layoutItem = (LinearLayout) inflater.inflate(R.layout.distance_question_answer_layout, parent, false);
         } else {
-            layoutItem = (ConstraintLayout) convertView;
+            layoutItem = (LinearLayout) convertView;
         }
 
         TextView fromCityText = layoutItem.findViewById(R.id.answerFromCityText);
