@@ -10,7 +10,6 @@ import java.util.Random;
 
 import edu.iut.m414.distimate.request.GeoDB;
 import edu.iut.m414.distimate.util.DataManager;
-import edu.iut.m414.distimate.util.Utilities;
 
 public class Game {
     private static final String TAG = Game.class.getSimpleName();
@@ -45,23 +44,21 @@ public class Game {
 
         Thread currentThread = Thread.currentThread();
         Thread initThread = new Thread(() -> {
-            long currentTime = SystemClock.elapsedRealtime();
             for (int i = 0; i < DataManager.MAX_GAME_SIZE && continueLoading; i++) {
+                long currentTime = SystemClock.elapsedRealtime();
+
                 int firstCityNumber = RNG.nextInt(country.getCitiesCount());
                 int secondCityNumber;
                 do {
                     secondCityNumber = RNG.nextInt(country.getCitiesCount());
                 } while (firstCityNumber == secondCityNumber);
 
-                long otherTime = SystemClock.elapsedRealtime();
                 City firstCity = GeoDB.requestCity(country.getId(), firstCityNumber, languageCode);
-                Log.d(TAG, "GOT FIRST CITY AFTER : " + (SystemClock.elapsedRealtime() - otherTime) + "ms");
 
                 if (!continueLoading)
                     break;
 
                 City secondCity = GeoDB.requestCity(country.getId(), secondCityNumber, languageCode);
-                Log.d(TAG, "GOT SECOND CITY AFTER : " + (SystemClock.elapsedRealtime() - otherTime) + "ms");
 
                 if (!continueLoading)
                     break;
@@ -74,7 +71,6 @@ public class Game {
 
 
                 int distance = GeoDB.requestDistance(firstCity.getId(), secondCity.getId());
-                Log.d(TAG, "GOT DISTANCE AFTER : " + (SystemClock.elapsedRealtime() - otherTime) + "ms");
 
                 synchronized (questionList) {
                     questionList.add(
@@ -84,7 +80,7 @@ public class Game {
                                     distance));
                 }
 
-                Log.d(TAG, "REQUEST ENDED AFTER " + (SystemClock.elapsedRealtime() - currentTime) + "ms");
+                Log.d(TAG, "REQUEST " + (i+1) + " ENDED AFTER " + (SystemClock.elapsedRealtime() - currentTime) + "ms");
                 Log.d(TAG, String.format("%s -> %s : %d",
                         questionList.get(i).getFrom(),
                         questionList.get(i).getTo(),
