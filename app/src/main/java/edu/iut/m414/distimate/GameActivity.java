@@ -252,7 +252,7 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
         private void getNextQuestion() {
             DistanceQuestion nextQuestion = Game.nextQuestion();
             if (nextQuestion != null) {
-                loadNextDistanceQuestionFragment(nextQuestion);
+                runOnUiThread(() -> loadNextDistanceQuestionFragment(nextQuestion));
             } else if (!Game.allQuestionsHaveLoaded()) {
                 if (Game.requestAreWorking()) {
                     Utilities.waitDelay(250, TAG);

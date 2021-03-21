@@ -8,8 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import edu.iut.m414.distimate.data.DistanceQuestion;
 import edu.iut.m414.distimate.util.Utilities;
 
