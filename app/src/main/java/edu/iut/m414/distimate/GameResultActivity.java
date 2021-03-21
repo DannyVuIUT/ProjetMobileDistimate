@@ -40,6 +40,7 @@ public class GameResultActivity extends AppCompatActivity {
     public void returnToMenu() {
         Intent intent = new Intent(GameResultActivity.this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @Override
