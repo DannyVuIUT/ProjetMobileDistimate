@@ -14,6 +14,10 @@ import edu.iut.m414.distimate.util.DataManager;
 import edu.iut.m414.distimate.util.Utilities;
 import edu.iut.m414.distimate.util.VibrationManager;
 
+/**
+ * Activité affichant les résultats de la partie venant
+ * de se terminer et permettant de revenir à l'activité principale
+ */
 public class GameResultActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,10 @@ public class GameResultActivity extends AppCompatActivity {
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener((view) -> returnToMenu());
 
+        // --------------------------------------------------------
+        // Technologie non vue : vibration
+        // A la fin de la partie, on fait vibrer le téléphone
+        // --------------------------------------------------------
         VibrationManager.vibrate(this, 1000);
     }
 

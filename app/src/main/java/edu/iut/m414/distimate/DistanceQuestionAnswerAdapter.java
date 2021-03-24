@@ -11,6 +11,11 @@ import android.widget.TextView;
 import edu.iut.m414.distimate.data.DistanceQuestion;
 import edu.iut.m414.distimate.util.Utilities;
 
+/**
+ * Adapter permettant d'afficher un résumé des questions posées
+ * durant la partie qui vient de se finir.
+ * Cet affichage permet d'avoir les réponses aux questions posées.
+ */
 public class DistanceQuestionAnswerAdapter extends BaseAdapter {
     private final DistanceQuestion[] questionAnswers;
     private final Context context;

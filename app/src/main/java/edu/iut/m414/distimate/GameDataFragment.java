@@ -18,11 +18,22 @@ import android.widget.TextView;
 import edu.iut.m414.distimate.util.TimeUpListener;
 import edu.iut.m414.distimate.util.Utilities;
 
+/**
+ * Fragment représentant les données globalesde la partie en cours :
+ * temps restant, pays de la partie, score actuel.
+ */
 public class GameDataFragment extends Fragment {
     private static final String ARG_COUNTRY_NAME = "countryName";
     private static final String ARG_DURATION = "duration";
 
     private TimeUpListener timeUpListener;
+
+    /**
+     * -----------------------------------------------------
+     *  Widget non vu : le chronomètre.
+     *  Il est en mode "countdown" pour servir de minuteur.
+     * -----------------------------------------------------
+     */
     private Chronometer gameTimer;
     private TextView currentScore;
     private long initialDuration;
@@ -93,6 +104,11 @@ public class GameDataFragment extends Fragment {
         gameTimer.setBase(
                 Math.max(gameTimer.getBase() - duration, SystemClock.elapsedRealtime()));
 
+        // --------------------------------------------------------------
+        // Quand on décrémente la durée restante, une animation faisant
+        // Trembler le temps restant, tout en le changeant en rouge,
+        // se joue.
+        // --------------------------------------------------------------
         AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(),R.animator.error_shake);
         set.setTarget(gameTimer);
         set.start();

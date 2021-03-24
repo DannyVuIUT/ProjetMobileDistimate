@@ -28,6 +28,13 @@ import edu.iut.m414.distimate.util.TimeUpListener;
 import edu.iut.m414.distimate.util.Utilities;
 import edu.iut.m414.distimate.util.VibrationManager;
 
+/**
+ * Activité permettant de jouer à la partie
+ * -----------------------------------------------------------
+ * Cette activité fait appel indirectement aux méthodes
+ * permettant d'utiliser le WebService GeoDB
+ * ----------------------------------------------------------
+ */
 public class GameActivity extends AppCompatActivity implements GameStartListener, DistanceGuessListener, TimeUpListener {
     private GameLoadingStateListener gameLoadingStateListener;
     private PlayerInputFragment playerInputFragment;
@@ -42,6 +49,7 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
         Intent intent = getIntent();
         if (intent != null) {
             int countryIndex = intent.getIntExtra(DataManager.KEY_COUNTRY, 0);
+            // ContryList est une classe Singleton utilisée à travers les activités
             Country selectedCountry = CountryList.get(countryIndex);
             loadGameDataFragment(getString(selectedCountry.getNameId()));
             loadGameSetupFragment();
@@ -90,6 +98,14 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
         new GetNextQuestionTask().execute(delay);
     }
 
+    /**
+     * ----------------------------------------------------------------------
+     * Méthode permettant de jouer une animation sur le fragment central,
+     * avant d'éxecuter une méthode par la suite.
+     * ----------------------------------------------------------------------
+     * @param animation
+     * @param onAnimationEnd
+     */
     private void animateCenterFrameThenExecute(Animation animation, Runnable onAnimationEnd) {
         centerFrame.startAnimation(animation);
         animation.setAnimationListener(new AnimationEndListener() {
@@ -101,11 +117,19 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
     }
 
     private void loadNextDistanceQuestionFragment(DistanceQuestion question) {
+        // ----------------------------------------------------------
+        // Une animation est jouée pour "sortir" la réponse courante
+        // Après l'animation, on charge la prochaine question
+        // ----------------------------------------------------------
         Animation slideOutAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_out);
         animateCenterFrameThenExecute(slideOutAnimation, () -> loadDistanceQuestionFragment(question));
     }
 
     private void loadDistanceQuestionFragment(DistanceQuestion question) {
+        // --------------------------------------------------------------------------
+        // Pour charger la prochaine question, on le met dans le fragment central
+        // Puis, on joue une ANIMATION pour faire "rentrer" la question dans l'écran
+        // --------------------------------------------------------------------------
         DistanceQuestionFragment distanceQuestionFragment =
                 DistanceQuestionFragment.newInstance(question.getFrom(), question.getTo());
         getSupportFragmentManager()
@@ -119,6 +143,12 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
     }
 
     private void loadDistanceAnswerFragment(long realDistance) {
+        // --------------------------------------------------------------------------------------
+        // Une animation est jouée pour "sortir" la question courante
+        // Puis on fait "rentrer" la réponse à la question (sans réponse de l'utilisateur)
+        // Ensuite, on fait "sortir" la réponse à la question courante (après un peu de temps)
+        // Enfin, on demande de jouer la prochaine question
+        // --------------------------------------------------------------------------------------
         Animation slideOutAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_out);
         animateCenterFrameThenExecute(slideOutAnimation,
                 () -> {
@@ -136,6 +166,12 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
     }
 
     private void loadDistanceAnswerAndGuessFragment(long realDistance, long guessedDistance) {
+        // --------------------------------------------------------------------------------------
+        // Une animation est jouée pour "sortir" la question courante
+        // Puis on fait "rentrer" la réponse à la question (avec la réponse de l'utilisateur)
+        // Ensuite, on fait "sortir" la réponse à la question courante (après un peu de temps)
+        // Enfin, on demande de jouer la prochaine question
+        // --------------------------------------------------------------------------------------
         Animation slideOutAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_out);
         animateCenterFrameThenExecute(slideOutAnimation,
                 () -> {
@@ -184,6 +220,11 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
         playerInputFragment.setInputEnabled(false);
         Game.updateScoreSkip();
         gameDataFragment.updateScore(Game.getCurrentScore());
+        // --------------------------------------------------------------
+        // Lorsque l'utilisateur passe une question, le téléphone vibre.
+        // Cela met en valeur la "perte" de temps
+        // (en plus de l'animation rouge sur le temps restant)
+        // --------------------------------------------------------------
         VibrationManager.vibrate(this, 150);
         gameDataFragment.decreaseTimer(DataManager.PENALTY_DURATION);
         loadDistanceAnswerFragment(Game.getCurrentQuestion().getActualDistance());
@@ -222,6 +263,12 @@ public class GameActivity extends AppCompatActivity implements GameStartListener
 
         @Override
         protected Void doInBackground(Country... countries) {
+            // ---------------------------------------------------------------
+            //
+            // Chargement des données de la partie, grâce à des requêtes vers
+            // Le webservice GeoDB.
+            //
+            // ---------------------------------------------------------------
             Game.initializeGameData(countries[0], getString(R.string.game_locale));
             return null;
         }

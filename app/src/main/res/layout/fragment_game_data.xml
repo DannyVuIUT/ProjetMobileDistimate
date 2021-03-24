@@ -75,6 +75,10 @@
             android:layout_height="wrap_content"
             android:textSize="25sp"
             android:text="@string/time_left"/>
+        <!--  ###########################################################
+              #               Widget non vu en classe                   #
+              #   Chronomètre utilisé pour le temps restant (minuteur)  #
+              ###########################################################   -->
         <Chronometer
             android:id="@+id/gameTimer"
             android:countDown="true"

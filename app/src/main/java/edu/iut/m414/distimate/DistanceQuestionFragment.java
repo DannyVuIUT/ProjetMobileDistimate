@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+/**
+ * Fragment permettant d'afficher une question du type
+ * "Quelle est la distance entre [villeA] et [villeB]"
+ */
 public class DistanceQuestionFragment extends Fragment {
     private static final String ARG_CITY_NAME_1 = "firstCityName";
     private static final String ARG_CITY_NAME_2 = "secondCityName";

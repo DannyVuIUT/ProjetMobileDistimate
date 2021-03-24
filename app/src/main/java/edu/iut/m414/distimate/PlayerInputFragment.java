@@ -18,6 +18,10 @@ import android.widget.EditText;
 
 import edu.iut.m414.distimate.util.DistanceGuessListener;
 
+/**
+ * Fragment permettant à l'utilisateur de saisir ses réponses à la
+ * question courante ou bien de passer la question courante.
+ */
 public class PlayerInputFragment extends Fragment {
     private static final String TAG = PlayerInputFragment.class.getSimpleName();
 

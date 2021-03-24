@@ -53,11 +53,17 @@ public class Game {
                     secondCityNumber = RNG.nextInt(country.getCitiesCount());
                 } while (firstCityNumber == secondCityNumber);
 
+                // --------------------------------------------------------------
+                // Requête à GeoDB pour récupérer une 1re ville
+                // --------------------------------------------------------------
                 City firstCity = GeoDB.requestCity(country.getId(), firstCityNumber, languageCode);
 
                 if (!continueLoading)
                     break;
 
+                // --------------------------------------------------------------
+                // Requête à GeoDB pour récupérer une 2e ville
+                // --------------------------------------------------------------
                 City secondCity = GeoDB.requestCity(country.getId(), secondCityNumber, languageCode);
 
                 if (!continueLoading)
@@ -69,7 +75,9 @@ public class Game {
                     break;
                 }
 
-
+                // --------------------------------------------------------------
+                // Requête à GeoDB pour récupérer la distance entre les 2 villes
+                // ---------------------------------------------------------------
                 int distance = GeoDB.requestDistance(firstCity.getId(), secondCity.getId());
 
                 synchronized (questionList) {

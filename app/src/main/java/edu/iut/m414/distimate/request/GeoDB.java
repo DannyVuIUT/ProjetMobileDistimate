@@ -7,6 +7,18 @@ import org.json.JSONObject;
 
 import edu.iut.m414.distimate.data.City;
 
+/**
+ * ########################################################################
+ * Classe permettant d'accéder au service web GeoDB.
+ * Le service renvoie des données en JSON.
+ * ------------------------------------------------------------------------
+ * Le service est utilisé pour récupérer des villes du pays de la partie.
+ * Les noms de villes sont récupérés dans la langue désirée.
+ *
+ * Le service est aussi utilisé pour calculer les distances pour les
+ * questions du jeu.
+ * ########################################################################
+ */
 public final class GeoDB {
     private static final String TAG = GeoDB.class.getSimpleName();
     private static final String MAIN_LINK = "http://geodb-free-service.wirefreethought.com/v1/geo/";

@@ -12,6 +12,10 @@ import android.widget.TextView;
 
 import edu.iut.m414.distimate.util.Utilities;
 
+/**
+ * Fragment permettant d'afficher la réponse à une question
+ * sur une distance, à laquelle l'utilisateur a tenté de donner une réponse
+ */
 public class DistanceAnswerFragment extends Fragment {
     private static final String ARG_ACTUAL_DISTANCE = "realDistance";
     private static final String ARG_GUESSED_DISTANCE = "guessedDistance";

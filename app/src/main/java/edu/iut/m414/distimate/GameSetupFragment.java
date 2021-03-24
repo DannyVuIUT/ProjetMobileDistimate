@@ -17,6 +17,10 @@ import edu.iut.m414.distimate.util.AnimationEndListener;
 import edu.iut.m414.distimate.util.GameLoadingStateListener;
 import edu.iut.m414.distimate.util.GameStartListener;
 
+/**
+ * Fragment permettant de démarrer la partie une fois
+ * que les premieres questions ont chargé
+ */
 public class GameSetupFragment extends Fragment implements GameLoadingStateListener {
     private GameStartListener startListener;
     private Button startButton;
