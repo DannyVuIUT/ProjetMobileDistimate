@@ -1,5 +1,10 @@
 package edu.iut.m414.distimate.data;
 
+/**
+ * -----------------------------------------------------------------------
+ * Classe représentant 1 objet JSON dans le fichier assets/countries.JSON
+ * -----------------------------------------------------------------------
+ */
 public class Country {
     private final String id;
     private final int nameId;

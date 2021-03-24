@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+###################################################
+Animation utilisée sur le chronomètre
+quand on PASSE une question au lieu de VALIDER
+###################################################
+-->
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     android:ordering="together">
     <objectAnimator

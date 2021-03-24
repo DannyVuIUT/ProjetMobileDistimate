@@ -17,6 +17,9 @@ import edu.iut.m414.distimate.data.Country;
 import edu.iut.m414.distimate.data.CountryList;
 import edu.iut.m414.distimate.util.Utilities;
 
+/**
+ *
+ */
 public class CountryAdapter extends BaseAdapter {
     private final Context context;
     private final LayoutInflater inflater;

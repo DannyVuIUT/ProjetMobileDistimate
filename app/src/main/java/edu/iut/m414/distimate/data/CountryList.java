@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CountryList {
+    //-------------------------------------------------------------------
+    // Pattern Singleton : Instance unique
+    // Toutes les méthodes manipulant l'instance unique sont statiques
+    //-------------------------------------------------------------------
     private static CountryList instance;
     private final List<Country> countries;
 
@@ -30,11 +34,22 @@ public class CountryList {
         return instance.countries.size();
     }
 
+    /**
+     * -----------------------------------------------------------------
+     * Singleton : création de l'instance unique
+     * -----------------------------------------------------------------
+     */
     private static void createInstance() {
         if (instance == null)
             instance = new CountryList();
     }
 
+    /**
+     * -----------------------------------------------------------------
+     * Chargement d'un fichier JSON pour remplir l'instance CountryList
+     * -----------------------------------------------------------------
+     * @param context - contexte
+     */
     public static void constructCountries(Context context) {
         createInstance();
         if (size() == 0) {
